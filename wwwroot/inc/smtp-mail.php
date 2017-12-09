@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
 * 邮件发送类
 * 支持发送纯文本邮件和HTML格式的邮件，可以多收件人，多抄送，多秘密抄送，带附件(单个或多个附件),支持到服务器的ssl连接
@@ -589,7 +589,7 @@ class ToolUtils {
 	}
 	return $tmp;
 	}
-	protected $_key = "putyourkeyhere";
+	protected $_key = "InputYourKeyLike'XXXXXXXXX'";
 	//加密
 	public function encry($str)
 	{
@@ -626,7 +626,7 @@ class ToolUtils {
 	* 发件人处理
 	* 取出相应的密码
 	**/
-	$sender = $fr.'@jasgo.com';
+	$sender = $fr.'@mail-hostname.com';
 	$query1 = "select * from mailinfo where maaddr='$fr' limit 1";
 	$res1=mysql_fetch_array(mysql_query($query1));
 	$pwd = $this -> decry($res1['mapwd']);
@@ -644,7 +644,7 @@ class ToolUtils {
 	* 初始化	
 	**/
 	$mail = new MySendMail();
-	$mail->setServer("smtp.yourdomain.com",$sender,$pwd,465,true); //设置smtp服务器，普通连接方式
+	$mail->setServer("smtp-hostname",$sender,$pwd,465,true); //设置smtp服务器，普通连接方式
 	$mail->setFrom($sender); //设置发件人
 	/**
 	* 发送之前，将邮件内容$ct套入模板$template
@@ -671,7 +671,7 @@ class ToolUtils {
 	else
 	{
 		//BCC
-		$mail->setReceiver("info@yourdomain.com"); //只是发送给info
+		$mail->setReceiver("e-mail-address"); //只是发送给info
 		$cta=$this->createTemp(0,$ct);//套入模板
 	    $mail->setMail($sub, $cta); 
 		for($j=0;$j<count($recv);$j++)
@@ -701,7 +701,7 @@ class ToolUtils {
 			$code=new ToolUtils();
 			$token=$code->encry($mail);
 			$str='</div>
-<div id="jfooter"><a class="ursub" href="http://jasgo.com/inc/unsubcribe.php?token='.$token.'">'.strtoupper('unsubscribe').'</a></div>	
+<div id="jfooter"><a class="ursub" href="http://hostname/inc/unsubcribe.php?token='.$token.'">'.strtoupper('unsubscribe').'</a></div>	
 </div>';
 		}
 
@@ -734,4 +734,9 @@ class ToolUtils {
 		$query=mysql_query('update cusinfo set flag=1 where csmail="'.$mail.'"');
 	}
 }
+
+//删除
+
+//修改
+
 ?>

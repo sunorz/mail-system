@@ -44,7 +44,7 @@
 
 				}
 	
-			if($_POST)
+			if(isset($_POST['recvtype']))
 			{
 			//开始提交
 			//1.发件人
