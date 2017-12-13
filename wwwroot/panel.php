@@ -68,7 +68,7 @@
 				if($ms->sendmail($fr,$to,$type,$ct,$at,$sub))
 				{
 					//发送成功
-					echo '<script>alert("发送成功");</script>';
+					alert("发送成功");
 				}
 				
 			}
@@ -81,7 +81,7 @@
 	<div class="form-group"><!--发件人-->
 		<label for="from" class="col-sm-2 control-label">发件人：</label>
 		<div class="col-sm-10" id="sender">
-		<?php echo $sender.'@jasgo.com';?>
+		<?php echo $sender.'@domain_name';?>
 		</div>
 	</div>
 	<div class="form-group"><!--收件人-->
@@ -139,7 +139,7 @@
 	
 		//客户邮箱列表
 		function cslist(){
-		//$q=mysql_query("select * from custinfo where csflag='0' order by cscate");
+		//$q=mysql_query("select * from custinfo where csflag=0 order by cscate");
 //		$items='
 //		<table class="table table-hover table-condensed table-responsive"><thead><tr><th>序号</th><th>企业名称</th><th>邮件地址</th></tr></thead><tbody>';
 //			$g=0;
@@ -190,7 +190,7 @@ function upattachment(){
     </dir>
     <dir>
     <form class="form-horizontal" method="post" action="" enctype="multipart/form-data">
-		<div class="form-group"><!--主题-->
+		<div class="form-group" id="s-field"><!--主题-->
 		<label for="subject" class="col-sm-2 control-label">邮件查询：</label>
 		<div class="col-sm-5" id="subject">
 		<input name="searchemail" id="searchm" type="text" class="form-control" maxlength="60">
