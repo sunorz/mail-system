@@ -33,15 +33,23 @@ $q=mysql_query("select *,case when csdate is null then '无' else csdate end as 
 		echo $items;
 				 break;
 			 case 'searchm':
-				 if(isset($_POST['skey']))
-				 {
+			  echo strpos($_POST['skey'],'%');
+				 if(isset($_POST['skey'])&&(strpos($_POST['skey'],'%')==''))
+				 { 
+ 
 					 $skey=$_POST['skey'];
 					  require('conn.php');
 
+$qstr = "select * from custinfo,category where csflag=0 and cscate=cateid  and (csname like '%".$skey."%' or csmail like '%".$skey."%') and cscate='".$_POST['stype']."' order by cscate";
+					 $qstr = str_replace('_','\_',$qstr);
+                     $q=mysql_query($qstr);
+					
 
-$q=mysql_query("select * from custinfo,category where csflag=0 and cscate=cateid  and (csname like '%".$skey."%' or csmail like '%".$skey."%') and cscate='".$_POST['stype']."' order by cscate");
-					 					 if(!isset($_POST['stype'])||$_POST['stype']=='0'){
-						$q=mysql_query("select * from custinfo,category where csflag=0 and cscate=cateid  and (csname like '%".$skey."%' or csmail like '%".$skey."%')  order by cscate"); 
+					 if(!isset($_POST['stype'])||$_POST['stype']=='0'){
+$qstr = "select * from custinfo,category where csflag=0 and cscate=cateid  and (csname like '%".$skey."%' or csmail like '%".$skey."%')  order by cscate";
+				     $qstr = str_replace('_','\_',$qstr);
+			         $q=mysql_query($qstr);
+				
 					 }
 		
 	if(mysql_num_rows($q)>0){

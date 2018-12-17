@@ -4,21 +4,21 @@ if(isset($_POST['mlist'])&&isset($_POST['email']))
 	require('inc/conn.php');
 	$class = $_POST['mlist'];
 	$email = $_POST['email'];
-	mysql_query("insert into eee (邮件名,class) values ('".$email."','".$class."')");
+	mysql_query("insert into eee (mailname,class) values ('".$email."','".$class."')");
 	$query = mysql_query("select * from eee where class='".$class."'");
-	$str = '<ul>';
+	$str = '<div class="result">';
 	while($row = mysql_fetch_array($query)){
-		if($row['邮件名']==$email){
-			$str.= '<li><mark>'.$row['邮件名'].'</mark></li>';
+		if($email==$row[2]){
+			$str.='<div id="curp">'.$row[2].'</div>';
 		}
 		else
 		{
-		$str.= '<li>'.$row['邮件名'].'</li>';
+			$str.='<div>'.$row[2].'</div>';
 		}
 	}
-	$str.='</ul>';
+	$str.='</div>';
 	if(ckstr($email,$class)){
-		$str='[error:'.ckstr($email,$class).']这个邮箱之前已经输入过了~';
+		$str='<div style="claer:both;height:2px;"></div><p style="padding:0.3em;">[error:'.ckstr($email,$class).']&nbsp;这个邮箱之前已经输入过了~</p>'.$str;
 	}
 	echo($str);
 	
@@ -26,7 +26,7 @@ if(isset($_POST['mlist'])&&isset($_POST['email']))
 
 function ckstr($mailname,$classname){
 	require('inc/conn.php');
-	$query = mysql_fetch_array(mysql_query("select count(*) as num,class from eee where 邮件名='".$mailname."' and class<>'".$classname."'"));
+	$query = mysql_fetch_array(mysql_query("select count(*) as num,class from eee where mailname='".$mailname."' and class<>'".$classname."'"));
 	if($query['num']<=0){
 		return false;
 	}

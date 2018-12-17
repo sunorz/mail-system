@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>再见</title>
+<title>导出</title>
 </head>
 
 <body>
@@ -15,8 +15,8 @@
 	});
 
 </script>
-<input type="number" step="1" value="0" min="0" id="mlist">
+<input type="number" step="1" value="93" min="0" id="mlist">
 <p><button id="dowork">Go!</button></p>
-<p><textarea name="txt" clos="100" rows="10" warp="virtual" style="width: 80%;"></textarea></p>
+<p><textarea name="txt" warp="virtual" style="width:200px;height: 200px;resize: none;"></textarea></p>
 </body>
 </html>

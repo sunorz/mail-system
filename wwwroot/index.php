@@ -14,7 +14,7 @@
 <body>
 <?php include("head.php");?> 
 <div class="login">
-<form autocomplete="off" class="form-horizontal" action="/" method="post">
+<!--<form autocomplete="off" class="form-horizontal" action="/" method="post">
   <p class="form-group">
     <label for="textfield" >用户名:</label>
     <input class="form-control" type="text" name="un" id="textfield" maxlength="20">
@@ -26,7 +26,10 @@
   <p class="form-group">
     <button class="btn btn-primary" type="submit" name="submit" id="submit">登录</button>&nbsp;&nbsp;<button class="btn btn-danger" type="button" id="reg">注册</button>
   </p>
-</form>
+</form>-->
+	邮箱：<input type="email" id="memail" style="background-color: transparent !important;ime-mode:disabled;border-bottom: solid #000;border-width: 0 0 1px 0;outline: none;width: 90%;font-size: 2em;">
+<p><button id="dowork">开始</button></p>
+<div id="CML"></div>
 <?php 
 	if (isset($_POST["pwd"])&&isset($_POST["un"])){
 		$un=$_POST["un"];
@@ -44,6 +47,7 @@
 	      exit;}
 	}
 	?>
+		<a href="tools-insert.php">[开始录入]</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="tools-ls.php">[导出内容]</a>
 </div>
 <script>$(function(){
 		$("#reg").click(function(event){
@@ -53,5 +57,6 @@
 			});
 		})
 	})</script>
+
 </body>
 </html>
