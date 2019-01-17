@@ -73,11 +73,6 @@ CREATE TABLE `mailinfo` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of mailinfo
--- ----------------------------
-INSERT INTO `mailinfo` VALUES ('1', 'tech.lz', 'BghRCFFXDHMBBVJqBWkKQw==');
-
--- ----------------------------
 -- Table structure for `userinfo`
 -- ----------------------------
 DROP TABLE IF EXISTS `userinfo`;
