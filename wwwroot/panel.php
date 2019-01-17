@@ -97,7 +97,7 @@
 		    循环单发</label>		 
 		  <label>
 		    <input type="radio" name="sendtype" value="1" id="sendtype_1">
-		    群发BBC</label>
+		    群发BCC</label>
 		  <br>
         </div>
 	</div>
@@ -129,6 +129,7 @@
 <?php 	
 		//收件人
 		function select_items(){
+		mysql_query("set names utf8");
 		$q=mysql_query("select * from category");
 		$items='';
 		while($row = mysql_fetch_array($q)){
@@ -138,8 +139,9 @@
 	}
 	
 		//客户邮箱列表
-		function cslist(){
-		//$q=mysql_query("select * from custinfo where csflag=0 order by cscate");
+//		function cslist(){
+//			
+//		$q=mysql_query("select * from custinfo where csflag=0 order by cscate");
 //		$items='
 //		<table class="table table-hover table-condensed table-responsive"><thead><tr><th>序号</th><th>企业名称</th><th>邮件地址</th></tr></thead><tbody>';
 //			$g=0;
@@ -149,7 +151,7 @@
 //		}
 //			$items.='</tbody></table><div class="clearfix"></div>';
 //		return $items;
-	}
+//	}
 		//上传附件
 function upattachment(){
 	$count = count($_FILES['file']['name']);

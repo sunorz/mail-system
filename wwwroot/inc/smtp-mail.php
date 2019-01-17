@@ -589,7 +589,7 @@ class ToolUtils {
 	}
 	return $tmp;
 	}
-	protected $_key = "jKfm4T5890KwYRf459WE03nu8546";
+	protected $_key = "V_KEY_FOR_ENCRYPT";
 	//加密
 	public function encry($str)
 	{
@@ -626,7 +626,7 @@ class ToolUtils {
 	* 发件人处理
 	* 取出相应的密码
 	**/
-	$sender = $fr.'@jasgo.com';
+	$sender = $fr.'@V_MAIL_DOMAIN_NAME';
 	$query1 = "select * from mailinfo where maaddr='$fr' limit 1";
 	$res1=mysql_fetch_array(mysql_query($query1));
 	$pwd = $this -> decry($res1['mapwd']);
@@ -644,7 +644,7 @@ class ToolUtils {
 	* 初始化	
 	**/
 	$mail = new MySendMail();
-	$mail->setServer("smtp.jasgo.com",$sender,$pwd,465,true); //设置smtp服务器，普通连接方式
+	$mail->setServer("V_SMTP_ADDRESS",$sender,$pwd,465,true); //设置smtp服务器，普通连接方式
 	$mail->setFrom($sender); //设置发件人
 	/**
 	* 发送之前，将邮件内容$ct套入模板$template
@@ -671,7 +671,7 @@ class ToolUtils {
 	else
 	{
 		//BCC
-		$mail->setReceiver("info@jasgo.com"); //只是发送给info
+		$mail->setReceiver("V_RECEIVER"); //会在收件时显示的收件人地址
 		$cta=$this->createTemp(0,$ct);//套入模板
 	    $mail->setMail($sub, $cta); 
 		for($j=0;$j<count($recv);$j++)

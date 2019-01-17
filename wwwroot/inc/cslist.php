@@ -17,7 +17,7 @@ session_start();
 	 switch($_POST['mode']){
 			 case 'getcsl'://显示全部
 				 require('conn.php');
-
+mysql_query("set names utf8");
 $q=mysql_query("select *,case when csdate is null then '无' else csdate end as ss from custinfo,category where cscate=cateid and csflag=0 order by cscate");
 			
 		$items='
@@ -135,8 +135,10 @@ $(function(){
 		})</script>
 		<?php if(isset($_GET['cmailid'])&&is_numeric($_GET['cmailid'])){
 	require('conn.php');
+	
 	$cmailid=$_GET['cmailid'];
 	$_SESSION['ckey']=$cmailid;
+	mysql_query("set names utf8");
 	$q=mysql_query("select * from custinfo,category where csflag=0 and cscate=cateid and csid='".$cmailid."'");
 	while($res=mysql_fetch_array($q)){
 		echo '<div><strong>客户名：</strong><input type="text" class="line-input" value="'.$res['csname'].'" maxlength="60"></div><div><strong>客户邮箱：</strong>'.$res['csmail'].'</div><div><select class="line-select">'.select_items($res['cscate']).'</select></div>';

@@ -1,16 +1,16 @@
-﻿/*
+/*
 Navicat MySQL Data Transfer
 
 Source Server         : localhost_3306
-Source Server Version : 50717
+Source Server Version : 50723
 Source Host           : localhost:3306
 Source Database       : co_cms
 
 Target Server Type    : MYSQL
-Target Server Version : 50717
+Target Server Version : 50723
 File Encoding         : 65001
 
-Date: 2017-12-06 17:30:37
+Date: 2019-01-17 09:22:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,6 +26,13 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of category
+-- ----------------------------
+INSERT INTO `category` VALUES ('1', '未分类');
+INSERT INTO `category` VALUES ('2', '日本客户');
+INSERT INTO `category` VALUES ('3', '英文客户');
+
+-- ----------------------------
 -- Table structure for `custinfo`
 -- ----------------------------
 DROP TABLE IF EXISTS `custinfo`;
@@ -35,10 +42,24 @@ CREATE TABLE `custinfo` (
   `csmail` varchar(100) NOT NULL,
   `cscate` int(11) NOT NULL DEFAULT '1',
   `csflag` bit(1) NOT NULL DEFAULT b'0',
+  `csdate` date DEFAULT NULL,
   PRIMARY KEY (`csid`),
   KEY `cscate` (`cscate`),
   CONSTRAINT `custinfo_ibfk_1` FOREIGN KEY (`cscate`) REFERENCES `category` (`cateid`) ON DELETE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for `eee`
+-- ----------------------------
+DROP TABLE IF EXISTS `eee`;
+CREATE TABLE `eee` (
+  `公司名` text,
+  `姓名` text,
+  `mailname` varchar(50) NOT NULL,
+  `class` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`mailname`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for `mailinfo`
@@ -51,6 +72,10 @@ CREATE TABLE `mailinfo` (
   PRIMARY KEY (`maid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+-- Records of mailinfo
+-- ----------------------------
+INSERT INTO `mailinfo` VALUES ('1', 'tech.lz', 'BghRCFFXDHMBBVJqBWkKQw==');
 
 -- ----------------------------
 -- Table structure for `userinfo`
@@ -67,4 +92,4 @@ CREATE TABLE `userinfo` (
 -- ----------------------------
 -- Records of userinfo
 -- ----------------------------
-INSERT INTO `userinfo` VALUES ('a', '0b4e7a0e5fe84ad35fb5f95b9ceeac79', '1', '1');
+INSERT INTO `userinfo` VALUES ('admin', '21232f297a57a5a743894a0e4a801fc3', '1', '1');
