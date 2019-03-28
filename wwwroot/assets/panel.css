@@ -25,7 +25,7 @@ li{
 	background:#FFF;
 	color: #000;
 	border-bottom-color:#fff;
-	cursor: default;
+	cursor: pointer;
 }
 .curhover{
     background:#FFF;

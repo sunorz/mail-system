@@ -39,7 +39,7 @@ $q=mysql_query("select *,case when csdate is null then '无' else csdate end as 
  
 					 $skey=$_POST['skey'];
 					  require('conn.php');
-
+mysql_query("set names utf8");
 $qstr = "select * from custinfo,category where csflag=0 and cscate=cateid  and (csname like '%".$skey."%' or csmail like '%".$skey."%') and cscate='".$_POST['stype']."' order by cscate";
 					 $qstr = str_replace('_','\_',$qstr);
                      $q=mysql_query($qstr);
@@ -57,6 +57,7 @@ $qstr = "select * from custinfo,category where csflag=0 and cscate=cateid  and (
 		$items='
 		<table class="table row-hover table-condensed table-responsive"><thead><tr><th>序号</th><th>客户分类</th><th>企业名称</th><th>邮件地址</th></tr></thead><tbody>';}
 			$g=0;
+					 mysql_query("set names utf-8");
 		while($row = mysql_fetch_array($q)){
 			$g++;
 			$items.='<tr class="row-pop row-hold"><th scope="row">'.$g.'</th><td>'.$row['catename'].'</td><td>'.$row['csname'].'</td><td>'.$row['csmail'].'</td><td class="row-hidden">'.$row['csid'].'</td></tr>';
