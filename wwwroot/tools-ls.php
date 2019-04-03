@@ -15,6 +15,7 @@
 	});
 
 </script>
+	<?php include("head.php");?> 
 <input type="number" step="1" value="93" min="0" id="mlist">
 <p><button id="dowork">Go!</button></p>
 <p><textarea name="txt" warp="virtual" style="width:200px;height: 200px;resize: none;"></textarea></p>

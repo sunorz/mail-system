@@ -67,7 +67,7 @@ $uid=$_SESSION['uid'];
 		</div>
 	</div>
 	<div class="form-group"><!--收件人-->
-		<label for="to" class="col-sm-2 control-label">收件人：</label>
+		<label for="to" class="col-sm-2 control-label">密送：</label>
 		<div class="col-sm-5">
 		<select class="form-control" id="input_rec" name="recvtype">
 		<?php echo select_items();?>
@@ -83,10 +83,15 @@ $uid=$_SESSION['uid'];
 		  <br>
         </div>
 	</div>
+	<div class="form-group" id="rc"><!--收件人-->
+		<label for="recvier" class="col-sm-2 control-label">收件人：</label>
+		<div class="col-sm-9" id="recvier">
+		<input name="recvier" id="recv" type="mail" class="form-control" required="required" placeholder="请填写此字段" maxlength="30" autocomplete="off">
+		</div></div>
 		<div class="form-group" id="subj"><!--主题-->
 		<label for="subject" class="col-sm-2 control-label">主题：</label>
 		<div class="col-sm-9" id="subject">
-		<input name="subject" id="sub" type="text" class="form-control" required="required" placeholder="请填写此字段" maxlength="30">
+		<input name="subject" id="sub" type="text" class="form-control" required="required" placeholder="请填写此字段" maxlength="30" autocomplete="off">
 		</div>
 	</div>
 	<div class="form-group"><!--内容-->
@@ -98,7 +103,7 @@ $uid=$_SESSION['uid'];
 	</div>
 	<div class="form-group"><!--发送按钮-->
 	<div class="col-sm-2"></div>
-		<div class="col-sm-1"><input class="btn btn-primary form-control" type="button" value="发送" onClick="send()"></div>
+		<div class="col-sm-1"><input id="send_submit" class="btn btn-primary form-control" type="button" value="发送" onClick="send()"></div>
 		<div class="col-sm-2" id="mails"></div>	
 		</div>
 	
@@ -185,13 +190,14 @@ function upattachment(){
 <script>
 var um = UM.getEditor('container');
 	function send(){
-
+		$("#send_submit").attr("disabled","disabled");
 		if($("#sub").val().trim()==""){
 	      $("#subj").attr("class","form-group has-error");
 
 		}
 		else
 		{
+		$("")
 		$("#subj").attr("class","form-group");
 		var concon = UM.getEditor('container').getContent();
 		$.post("inc/phpmailer.php",{
@@ -200,7 +206,8 @@ var um = UM.getEditor('container');
 			type:$("input[name='sendtype']:checked").val(),
 			subject:$("#sub").val(),
 			cont:concon,
-			attrs:null
+			attrs:null,//这里是附件暂时留空
+			bccto:$("#recv").val()
 		},function(result){
 				  $("dir").html('<p><a href="panel.php">再写一封</a></p><div style="background:#121212;color:#fff;padding:1em;">'+result+'</div>');});	
 		}
@@ -229,6 +236,16 @@ var um = UM.getEditor('container');
 				
 			$.post("inc/cslist.php",{mode:'searchm',skey:$("#searchm").val(),stype:$("#selm").val()},function(result){$("#CML").html(result);});
 		});
+		$('input[type=radio][name=sendtype]').on("change",function() {
+        if (this.value == 1) {
+			$("#recv").removeAttr("disabled");
+            $("#rc").slideDown();
+		}
+        else if(this.value == 0) {
+			$("#recv").attr("disabled","disabled");
+            $("#rc").slideUp();
+        }
+    });
 		
 });	
 

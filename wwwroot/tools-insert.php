@@ -35,7 +35,7 @@ a,a:link,a:active,a:visited{color:#000;text-decoration:none;}
 </head>
 
 <body>
-
+<?php include("head.php");?> 
 <a href="#" id="eye">[睡眠模式]</a>&nbsp;&nbsp;<a href="tools-ls.php" target="_blank">[导出]</a>&nbsp;&nbsp;<a href="/">[返回首页]</a><br/><br/><br/>
 分组编号：<input type="number" step="1" value="93" min="0" id="mlist" style="ime-mode:disabled;"><br/><br/>
 邮箱：<input type="email" id="memail" style="background-color: transparent !important;ime-mode:disabled;border-bottom: solid #000;border-width: 0 0 1px 0;outline: none;width: 90%;font-size: 2em;">

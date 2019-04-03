@@ -24,7 +24,7 @@
     <input class="form-control" type="password" name="pwd" id="password">
   </p>
   <p class="form-group">
-    <button class="btn btn-primary" type="submit" name="submit" id="submit">登录</button>&nbsp;&nbsp;<button class="btn btn-danger" type="button" id="reg">注册</button>
+    <button class="btn btn-primary" type="submit" name="submit" id="submit">登录</button>&nbsp;&nbsp;
   </p>
 </form>
 

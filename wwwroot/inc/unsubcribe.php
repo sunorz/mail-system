@@ -9,30 +9,27 @@
 <link rel="stylesheet" href="../assets/fonts/css/font-awesome.min.css">
 <style>
 	.form-inline{max-width: 800px;width: 90%;margin: 90px auto;text-align: center;}
-	.cls{background: #484848;color: #fff;font-size: 12px;width: 90%;margin: 0 auto;padding: 1em;}
+	.cls{background: #484848;color: #fff;font-size: 12px;width: 90%;margin: 20px auto;padding: 1em;}
 </style>
 <script src="../assets/jquery.js"></script>
 <script src="../assets/bootstrap.js"></script>
 <body>
 <?php
+	
 if(isset($_GET['token']))
 {
-	$token = $_GET['token'];
 	require('conn.php');
-	require('phpmailer.php');
-	$mail = new ToolUtils();
-	$demail = $mail->decry($_GET['token']);
+	require('functions.php');
+	$demail = decry($_GET['token']);
 	if(strpos($demail,'@')>0){
-		$ress = mysql_query("select csmail from custinfo  where csmail='".$demail."' limit 1");
-		var_dump($ress);
+		$ress = mysql_query("select * from custinfo  where csmail='".$demail."' limit 1");
 		while($rows=mysql_fetch_array($ress)){
 			
-			if($rows['cflag']==1){
+			if($rows['csflag']==1){
 				echo '<div class="cls">(error:0x72000)此邮件已经退订！</div>';
 			}
 			else{
-						
-				$mail->unsub($demail);
+				unsub($demail);
 				echo '<div class="cls">退订成功。</div>';
 			}
 		}		
@@ -58,7 +55,7 @@ else{
 	header('Location:/');
 }
 
-//处理bcc退订
+//处理bcc退订	
 ?>
 <script>
 $(function(){
