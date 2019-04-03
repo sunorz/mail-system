@@ -18,12 +18,15 @@ function sendMail($fr,$to,$ct,$at,$sub,$bccto){
 			$getCust=mysql_query("select csmail from custinfo where cscate=".$to." and csflag=0");
 			while($row_getCust=mysql_fetch_array($getCust)){
 				$mail->addBCC($row_getCust['csmail']);
+				mysql_query("update custinfo set csdate='".date('Y-m-d')."' where csmail='".$row_getCust['csmail']."'");
 			}
 			$cta=createTemp(0,$ct);//套入模板
 			$mail->addAddress(trim($bccto));//设置指定的收件人
 		}
 		else
 		{
+			require("conn.php");
+			mysql_query("update custinfo set csdate='".date('Y-m-d')."' where csmail='".$to."'");
 			$cta=createTemp($to,$ct);//套入模板
 			$mail->addAddress($to);//设置指定的收件人
 		}
@@ -109,12 +112,12 @@ function sendMail($fr,$to,$ct,$at,$sub,$bccto){
 			$str='<div id="jfooter">';
 			if($mail!=0){				
 				$token=encry($mail);
-				$str.='<a class="ursub" href="http://mms.jasgo.com/inc/unsubcribe.php?token='.$token.'">UNSUBSCRIBE</a>';
+				$str.='<a class="ursub" href="http://mms.jasgo.com/inc/changemail.php?token='.$token.'">UPDATE E-MAIL ADDRESS</a><a class="ursub" href="http://mms.jasgo.com/inc/unsubcribe.php?token='.$token.'">UNSUBSCRIBE</a>';
 			}
 			else
 			{				
 				$token=encry(date('Y-m-d').'&'.'bcc');
-				$str.='<a class="ursub" href="http://mms.jasgo.com/inc/unsubcribe.php?token='.$token.'">UNSUBSCRIBE</a>';
+				$str.='<a class="ursub" href="http://mms.jasgo.com/inc/changemail.php?token='.$token.'">UPDATE E-MAIL ADDRESS</a><a class="ursub" href="http://mms.jasgo.com/inc/unsubcribe.php?token='.$token.'">UNSUBSCRIBE</a>';
 			}
 			$str.='</div>';
 			return '<style>
@@ -143,6 +146,10 @@ function sendMail($fr,$to,$ct,$at,$sub,$bccto){
 			require_once('conn.php');
 			mysql_query('update custinfo set csflag=1 where csmail="'.$mail.'"');
 		}
-
+//更新操作
+function changeMail($older,$new){
+	require_once('conn.php');
+			mysql_query("update custinfo set csmail='".$new."' where csmail='".$older);
+}
 
 				?>

@@ -209,7 +209,7 @@ var um = UM.getEditor('container');
 			attrs:null,//这里是附件暂时留空
 			bccto:$("#recv").val()
 		},function(result){
-				  $("dir").html('<p><a href="panel.php">再写一封</a></p><div style="background:#121212;color:#fff;padding:1em;">'+result+'</div>');});	
+				  $("dir").html('<p><a href="panel.php">再写一封</a></p><div style="background:#121212;color:#fff;padding:1em;max-height:300px;overflow-y:scroll;">'+result+'</div>');});	
 		}
 		//alert(UM.getEditor('container').getContent());
 	}
