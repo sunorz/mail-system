@@ -1,4 +1,36 @@
 # mail-system  
+`表category`
+
+|字段名|数据类型|备注|
+|:---:|:---:|:---:|
+|cateid|int|分组ID|
+|catename|varchar(20)|分组名称|
+
+`表custinfo`
+
+|字段名|数据类型|备注|
+|:---:|:---:|:---:|
+|csname|text|客户名|
+|csid|int|客户ID|
+|csmail|varchar(100)|客户邮箱地址|
+|cscate|int|分组ID|
+|csflag|bit|停用标记（1停用\|0启用）|
+|csdate|date|最后发送日期|
+
+`表eee` 
+**此表单纯用于导入导出，暂时不参与邮件群发**
+
+|字段名|数据类型|备注|
+|:---:|:---:|:---:|
+|公司名|text|公司名|
+|姓名|text|人名|
+|mailname|varchar(50)|邮箱地址|
+|class|varchar(30)|分类编号|
+
+`表mailinfo`
+
+`表userinfo`
+
 Username:admin  
 Password:admin  
 
