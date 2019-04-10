@@ -112,12 +112,12 @@ function sendMail($fr,$to,$ct,$at,$sub,$bccto){
 			$str='<div id="jfooter">';
 			if($mail!=0){				
 				$token=encry($mail);
-				$str.='<a class="ursub" href="http://mms.jasgo.com/inc/changemail.php?token='.$token.'">UPDATE E-MAIL ADDRESS</a><a class="ursub" href="http://mms.jasgo.com/inc/unsubcribe.php?token='.$token.'">UNSUBSCRIBE</a>';
+				$str.='<a class="ursub" href="http://mms.jasgo.com/inc/changemail.php?token='.$token.'">配信メールを変更してください</a>&nbsp;&nbsp;<a class="ursub" href="http://mms.jasgo.com/inc/unsubcribe.php?token='.$token.'">購読を中止</a>';
 			}
 			else
 			{				
 				$token=encry(date('Y-m-d').'&'.'bcc');
-				$str.='<a class="ursub" href="http://mms.jasgo.com/inc/changemail.php?token='.$token.'">UPDATE E-MAIL ADDRESS</a><a class="ursub" href="http://mms.jasgo.com/inc/unsubcribe.php?token='.$token.'">UNSUBSCRIBE</a>';
+				$str.='<a class="ursub" href="http://mms.jasgo.com/inc/changemail.php?token='.$token.'">配信メールを変更してください</a>&nbsp;&nbsp;<a class="ursub" href="http://mms.jasgo.com/inc/unsubcribe.php?token='.$token.'">購読を中止</a>';
 			}
 			$str.='</div>';
 			return '<style>
@@ -131,8 +131,8 @@ function sendMail($fr,$to,$ct,$at,$sub,$bccto){
 		}
 		#jtitle{color: #95b7de;top:0;font-size:2em;font-weight: bolder;padding: 0.5em 0 0.5em 0.5em;}
 		#jcontent{background:#fff;padding: 2.5em;margin: 0 2em;word-break: break-all;overflow: hidden;color: #121212;}	
-		.ursub{color: #1a73e8;font-size: 0.7em;text-decoration: none;}
-		.ursub:hover{color:#121212;text-decoration: underline;}
+		.ursub{color: #121212;font-size: 0.7em;text-decoration: none;}
+		.ursub:hover{text-decoration: underline;}
 		#jfooter{text-align: right;padding:20px;}
 	</style>
 	<div id="jwrap">

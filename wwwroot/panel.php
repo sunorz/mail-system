@@ -95,7 +95,11 @@ $uid=$_SESSION['uid'];
 		</div>
 	</div>
 	<div class="form-group"><!--内容-->
-	<label for="content" class="col-sm-2 control-label">内容：</label>
+	<label for="chgimg" class="col-sm-2 control-label"></label>
+	<div class="col-sm-10"><img src="assets/imgs/bg_chk.png" style="cursor: pointer;margin-right: 0.3em;" id="chgimg">采用模板</div>
+	</div>
+	<div class="form-group"><!--内容-->
+	<label for="container" class="col-sm-2 control-label">内容：</label>
 	<div class="col-sm-10">
 		<textarea type="text/plain" id="container" style="height:240px;">
 		</textarea>
@@ -222,7 +226,24 @@ var um = UM.getEditor('container');
 </div><!--end-->
 <script>
 	$(function(){
-
+	$('#chgimg').on({  
+                    click:function(){ 
+					if($('#chgimg').attr('src')=='assets/imgs/bg_chk.png')
+					{
+						 $('#chgimg').attr('src', 'assets/imgs/bg_chkon.png'); 
+						$(".edui-body-container").html('TEMPLATE_CONTENT');
+						
+					}
+					else if($('#chgimg').attr('src')=='assets/imgs/bg_chkon.png')
+					{
+						 $('#chgimg').attr('src', 'assets/imgs/bg_chk.png'); 
+						$(".edui-body-container").html('');
+						
+					}  
+                   } 
+						 
+                }); 
+	
 	$("#cusmail").click(function(){
 		
 		$("#searchm").bind('input propertychange', function() {
