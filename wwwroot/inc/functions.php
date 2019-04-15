@@ -65,7 +65,7 @@ function sendMail($fr,$to,$ct,$at,$sub,$bccto){
 	//加密
 	 function encry($txt)
 	{
-		$key="ENTER_YOUR_KEY";
+	$key="ENTER_YOUR_KEY";
     $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-=+";
     $nh = rand(0,64);
     $ch = $chars[$nh];
