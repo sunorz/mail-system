@@ -12,7 +12,7 @@
 
 |字段名|数据类型|备注|
 |:---:|:---:|:---:|
-|csname|text|客户名|
+|csname|varchar(50)|客户名|
 |csid|int|客户ID|
 |csmail|varchar(100)|客户邮箱地址|
 |cscate|int|分组ID|
@@ -24,8 +24,8 @@
 
 |字段名|数据类型|备注|
 |:---:|:---:|:---:|
-|公司名|text|公司名|
-|姓名|text|人名|
+|company|text|公司名|
+|cname|text|人名|
 |mailname|varchar(50)|邮箱地址|
 |class|varchar(30)|分类编号|
 
