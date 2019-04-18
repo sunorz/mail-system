@@ -1,5 +1,6 @@
 <meta charset="utf-8">
 <script src="../assets/jquery.js"></script>
+<script src="../assets/jquery.cookie.js"></script>
 <style>.row-hidden{display:none;}
 		.row-hold:hover{background: #3879D9;color: #FFFFFF;cursor: pointer;}
 		.line-input{border:#000000 solid 1px;border-width: 0 0 1px 0;outline: none;width: 100%;}
@@ -7,89 +8,77 @@
 		#CML div{margin:1em 0 1em 0;}
 		</style>
 <?php
-	if(!isset($_SESSION))
+if(!isset($_SESSION))
 {
 session_start(); 
 }
-	if(isset($_SESSION['uid'])&&isset($_POST['mode'])){
-		
-	 $items='';
-	 switch($_POST['mode']){
-			 case 'getcsl'://显示全部
-				 require('conn.php');
-mysql_query("set names utf8");
-$q=mysql_query("select *,case when csdate is null then '无' else csdate end as ss from custinfo,category where cscate=cateid and csflag=0 order by cscate");
-			
-		$items='
-		<table class="table row-hover table-condensed table-responsive"><thead><tr><th>序号</th><th>客户分类</th><th>企业名称</th><th>邮件地址</th><th>最后发送时间</th></tr></thead><tbody>';
-				
-			$g=0;
-		while($row = mysql_fetch_array($q)){
-			$g++;
-			$items.='<tr class="row-pop row-hold"><th scope="row">'.$g.'</th><td>'.$row['catename'].'</td><td>'.$row['csname'].'</td><td>'.$row['csmail'].'</td><td>'.$row['ss'].'</td><td class="row-hidden">'.$row['csid'].'</td></tr>';
-		}
-			$items.='</tbody></table><div class="clearfix"></div>';
-			  if(mysql_num_rows($q)==0){$items="<span class='text-danger'>没有任何可用的邮箱地址。</span><div class=\"clearfix\"></div>";}
-		echo $items;
-				 break;
-			 case 'searchm':
-			  echo strpos($_POST['skey'],'%');
-				 if(isset($_POST['skey'])&&(strpos($_POST['skey'],'%')==''))
-				 { 
- 
-					 $skey=$_POST['skey'];
-					  require('conn.php');
-mysql_query("set names utf8");
-$qstr = "select * from custinfo,category where csflag=0 and cscate=cateid  and (csname like '%".$skey."%' or csmail like '%".$skey."%') and cscate='".$_POST['stype']."' order by cscate";
-					 $qstr = str_replace('_','\_',$qstr);
-                     $q=mysql_query($qstr);
-					
+if(isset($_SESSION['uid'])&&isset($_POST['mode'])){
+	
+	require('conn.php');
+	$curpage=1;
+	
+	if(isset($_COOKIE['p'])&&$_COOKIE['p']>0){
+		$curpage=$_COOKIE['p'];
+	}
+		if($_POST['stype']==null&&!strpos($_POST['skey'],"%")&&trim($_POST['skey'])!=""){
+			$query_a=" and csid>=(select csid from custinfo where (csname like '%".$_POST['skey']."%' or csmail like '%".$_POST['skey']."%') and csflag=0 limit ".(($curpage-1)*19).",1) limit 20";
 
-					 if(!isset($_POST['stype'])||$_POST['stype']=='0'){
-$qstr = "select * from custinfo,category where csflag=0 and cscate=cateid  and (csname like '%".$skey."%' or csmail like '%".$skey."%')  order by cscate";
-				     $qstr = str_replace('_','\_',$qstr);
-			         $q=mysql_query($qstr);
-				
-					 }
-		
-	if(mysql_num_rows($q)>0){
-		 echo '<span class=\'text-success\'>共找到'.number_format(mysql_num_rows($q)).'条数据。</span>';
+			//根据关键字
+			$query="select * from custinfo,category where cateid=cscate and csflag=0 and (csname like '%".$_POST['skey']."%' or csmail like '%".$_POST['skey']."%')";
+			if(($total=mysql_num_rows(mysql_query($query)))>0){
+				//echo '第'.$curpage.'页/共'.ceil($total/20).'页'; 
+				 echo '<br/><span class=\'text-success\'>共找到'.$total.'条数据。</span>';
 		$items='
-		<table class="table row-hover table-condensed table-responsive"><thead><tr><th>序号</th><th>客户分类</th><th>企业名称</th><th>邮件地址</th></tr></thead><tbody>';}
-			$g=0;
-					 mysql_query("set names utf-8");
+		<table class="table row-hover table-condensed table-responsive"><thead><tr><th>客户分类</th><th>企业名称</th><th>邮件地址</th><th>最后发送时间</th></tr></thead><tbody>';}
+     	 mysql_query("set names utf8");
+			$q=mysql_query($query.$query_a);
+			//echo $query.$query_a;
 		while($row = mysql_fetch_array($q)){
-			$g++;
-			$items.='<tr class="row-pop row-hold"><th scope="row">'.$g.'</th><td>'.$row['catename'].'</td><td>'.$row['csname'].'</td><td>'.$row['csmail'].'</td><td class="row-hidden">'.$row['csid'].'</td></tr>';
+			$items.='<tr class="row-pop row-hold"><td>'.$row['catename'].'</td><td>'.$row['csname'].'</td><td>'.$row['csmail'].'</td><td>'.$row['csdate'].'</td><td class="row-hidden">'.$row['csid'].'</td></tr>';
 		}
 					 if(mysql_num_rows($q)>0){
 			$items.='</tbody></table><div class="clearfix"></div>';
 					 }
-					 else{
-						 if(trim($skey)==""){
-							 $items.="<span class='text-danger'>这个分组下没有任何邮箱地址。</span><div class=\"clearfix\"></div>";
-						 }
-						 else
-						 $items.="<span class='text-danger'>没有找到与&nbsp;<strong>".$skey."</strong>&nbsp;对应的邮箱地址。</span><div class=\"clearfix\"></div>";
+				
+
+			
+		}
+	elseif($POST['skey']==null)
+	{
+		$query_b=" and csid>=(select csid from custinfo where cscate='".$_POST['stype']."' and csflag=0 limit ".(($curpage-1)*19).",1) limit 20";
+		//根据分组
+					$query="select * from custinfo,category where cateid=cscate and csflag=0 and cateid='".$_POST['stype']."'";
+					if(($total=mysql_num_rows(mysql_query($query)))>0){
+				//echo $curpage.'/'.ceil($total/20);
+						 echo '<span class=\'text-success\'>共找到'.$total.'条数据。</span>';
+		$items='
+		<table class="table row-hover table-condensed table-responsive"><thead><tr><th>客户分类</th><th>企业名称</th><th>邮件地址</th><th>最后发送时间</th></tr></thead><tbody>';}
+
+					 mysql_query("set names utf8");
+		$q=mysql_query($query.$query_b);
+
+		while($row = mysql_fetch_array($q)){
+			$items.='<tr class="row-pop row-hold"><td>'.$row['catename'].'</td><td>'.$row['csname'].'</td><td>'.$row['csmail'].'</td><td>'.$row['csdate'].'</td><td class="row-hidden">'.$row['csid'].'</td></tr>';
+		}
+					 if(mysql_num_rows($q)>0){
+			$items.='</tbody></table><div class="clearfix"></div>';
 					 }
-		echo $items;
-				 }
-				 break;
-			 default:
-				 break;
-		 }
-		
-	
-	}elseif(!isset($_SESSION['uid'])){
-		header("Location:/");
-	}
+						
+				
+			}
+
+			echo $items;
+
+}
+
+
 	
 
 ?>
 <script>
-	function reloadp(){$.post("inc/cslist.php",{mode:'getcsl'},function(result){$("#CML").html(result);});	}
 	
 $(function(){
+
 		$(".row-pop").click(function(){
 			$("#s-field").hide();
             $.get("inc/cslist.php",{cmailid:$(this).find(".row-hidden").text()},function(result){$("#CML").html(result);});	
@@ -97,7 +86,7 @@ $(function(){
 		$("#goback").click(function(event){
 			event.preventDefault(); 
 			$("#s-field").show();			
-			reloadp();	
+	
 			
 		});		
 		//删除按钮
@@ -108,8 +97,7 @@ $(function(){
 				{	
 			$.post("inc/db-cusmail.php",{m:'delete'});
 			setTimeout(function(){alert('删除成功。');},500);
-			$("#s-field").show();
-			setTimeout(function(){reloadp();},1000);	
+			$("#s-field").show();			
 			
 				}
 			else
@@ -123,7 +111,7 @@ $(function(){
 			$.post("inc/db-cusmail.php",{m:'edit',cname:$(".line-input").val(),cc:$(".line-select").val()});
 			alert("保存成功");
 			$("#s-field").show();
-			reloadp();
+
 		})	
 		
 		$(".line-input").bind('input propertychange',function(){

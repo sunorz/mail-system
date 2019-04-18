@@ -14,11 +14,8 @@ if(isset($_POST['keywds']))
 	{
 	$str = '<div class="result"><div>你可能想输入：</div>';
 	while($row = mysql_fetch_array($query)){		
-			$str.='<div>'.$row['mailname'];
-		if($row['company']!=""){
-			$str.='   <i style="color:orange;">'.$row['company'].'</i>';
-		}
-		$str.='</div>';
+			$str.='<div>'.$row['mailname'].'   <i style="color:orange;padding-right:1em;">'.$row['class'].'</i></div>';
+		}		
 	}
 	$str.='</div>';
 	echo($str);
@@ -27,5 +24,5 @@ if(isset($_POST['keywds']))
 	}
 	}
 	
-}
+
 ?>

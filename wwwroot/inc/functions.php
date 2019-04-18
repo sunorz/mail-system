@@ -49,11 +49,7 @@ function sendMail($fr,$to,$ct,$at,$sub,$bccto){
 		$mail->Subject =  $sub; // 设置邮件标题
 		$mail->AltBody    = "为了查看该邮件，请切换到支持 HTML 的邮件客户端";                                         // 可选项，向下兼容考虑
 		$mail->Body=$cta;
-		//$mail->MsgHTML('<html>人间四月天。</html>');                         // 设置邮件内容
-		//$mail->AddAddress('2975519547@qq.com');
-		//$mail->addBCC('cs.j4@jasgo.com');
-		//$mail->addBCC('hr.lz@jasgo.com');
-		
+	
 		//$mail->AddAttachment("images/phpmailer.gif"); // 附件
 
 		if(!$mail->Send()) {
@@ -65,7 +61,7 @@ function sendMail($fr,$to,$ct,$at,$sub,$bccto){
 	//加密
 	 function encry($txt)
 	{
-	$key="ENTER_YOUR_KEY";
+		$key="ENTER_YOUR_KEY";
     $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-=+";
     $nh = rand(0,64);
     $ch = $chars[$nh];

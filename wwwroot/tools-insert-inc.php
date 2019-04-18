@@ -8,12 +8,12 @@ if(isset($_POST['mlist'])&&isset($_POST['email']))
 	$query = mysql_query("select * from eee where class='".$class."'");
 	$str = '<div class="result">';
 	while($row = mysql_fetch_array($query)){
-		if($email==$row[2]){
-			$str.='<div id="curp">'.$row[2].'</div>';
+		if($email==$row['mailname']){
+			$str.='<div id="curp" style="padding-right:1em;">'.$row['mailname'].'</div>';
 		}
 		else
 		{
-			$str.='<div>'.$row[2].'</div>';
+			$str.='<div style="padding-right:1em;">'.$row['mailname'].'</div>';
 		}
 	}
 	$str.='</div>';

@@ -42,8 +42,8 @@
 <div class="login">
 <div class="menu">
 	<ul>
-		<li id="send">发邮件</li>
-		<li id="cusmail">客户邮件列表</li>
+		<li id="send" class="curclick">发邮件</li>
+		<li id="cusmail" onClick="window.location.href='panel-b.php';">客户邮件列表</li>
 	</ul>
 </div>
 <div class="content">
@@ -119,7 +119,15 @@ $uid=$_SESSION['uid'];
 		$q=mysql_query("select * from category");
 		$items='';
 		while($row = mysql_fetch_array($q)){
-			$items.='<option value ="'.$row['cateid'].'">'.$row['catename'].'</option>';
+			if($row['cateid']==2333)
+			{
+				$items.='<option value ="'.$row['cateid'].'" selected="selected">'.$row['catename'].'</option>';
+			}
+			else
+			{
+				$items.='<option value ="'.$row['cateid'].'">'.$row['catename'].'</option>';
+			}
+			
 		}
 		return $items;
 	}
@@ -178,20 +186,7 @@ function upattachment(){
 	
 		?>
     </dir>
-    <dir>
-    <form class="form-horizontal" method="post" action="panel.php" enctype="multipart/form-data">
-		<div class="form-group" id="s-field"><!--主题-->
-		<label for="subject" class="col-sm-2 control-label">邮件查询：</label>
-		<div class="col-sm-5" id="subject">
-		<input name="searchemail" id="searchm" type="text" class="form-control" maxlength="60">
-		</div>
-		<div class="col-sm-2" id="subject">
-		<select class="form-control" id="selm"><option value="0">[--筛选分组--]</option><?php echo select_items();?></select>
-		</div>
-	</div>
-    <div id="CML" style="width: 80%;margin: 0 auto;max-width: 1000px;"></div>
-    </form></dir>
-<script>
+ <script>
 var um = UM.getEditor('container');
 	function send(){
 		$("#send_submit").attr("disabled","disabled");
@@ -201,7 +196,6 @@ var um = UM.getEditor('container');
 		}
 		else
 		{
-		$("")
 		$("#subj").attr("class","form-group");
 		var concon = UM.getEditor('container').getContent();
 		$.post("inc/phpmailer.php",{
@@ -231,7 +225,7 @@ var um = UM.getEditor('container');
 					if($('#chgimg').attr('src')=='assets/imgs/bg_chk.png')
 					{
 						 $('#chgimg').attr('src', 'assets/imgs/bg_chkon.png'); 
-						$(".edui-body-container").html('TEMPLATE_CONTENT');
+						$(".edui-body-container").html('<p><span style="white-space: nowrap;">※このメールは、日本語、英語、中国語の3言語で配信しており、日本語版、英語版、中国語版の順に掲載しています。</span></p><p><span style="white-space: nowrap;">※This e-mail is released in three languages:Japanese, English, and Chinese. The editions appear in the following order: Japanese, English, and Chinese.</span></p><p><span style="white-space: nowrap;">※本邮件以日文，英文和中文三个语言版本发送。语言版本顺序：日文，英文和中文。</span></p><p><span style="white-space: nowrap;"><br/></span></p><p><span style="white-space: nowrap;">お客様各位</span></p><p><span style="white-space: nowrap;"><br/></span></p><p>    <span style="white-space: nowrap;">OOXX</span></p><p><span style="white-space: nowrap;"><br/></span></p><p>    <span style="white-space: nowrap;">お客様におかれましては、これまでの力強いご支援に心より感謝申し上げますとともに、今後とも弊社業務への変わらぬご支援を賜りますようお願い申し上げます。</span></p><p><span style="white-space: nowrap;"><br/></span></p><p><span style="white-space: nowrap;">*********************************************************************************</span></p><p>    <span style="white-space: nowrap;">携達グループグローバルオンラインセンター</span></p><p><span style="white-space: nowrap;">（柳州携達翻訳有限公司、柳州携智信息技術有限公司、柳州携達人力資源有限公司）</span></p><p><span style="white-space: nowrap;"><br/></span></p><p><span style="white-space: nowrap;">545001　中国広西柳州市城中区龍城路21号瑞泰大厦13楼1306室</span></p><p><span style="white-space: nowrap;">Tel: 0772-2804060、2804085、2230065、2236002</span></p><p><span style="white-space: nowrap;">E-mail: info@jasgo.com&nbsp;</span></p><p><span style="white-space: nowrap;">URL: http://www.jasgo.com</span></p><p><span style="white-space: nowrap;"><br/></span></p><p><span style="white-space: nowrap;">東京・大阪・上海・南寧・柳州</span></p><p><span style="white-space: nowrap;">*********************************************************************************</span></p><p>    <span style="white-space: nowrap;"><br/></span></p><p><span style="white-space: nowrap;"><br/></span></p><p>    <span style="white-space: nowrap;"><br/></span></p><p><span style="white-space: nowrap;">Dear Customers,</span></p><p><span style="white-space: nowrap;"><br/></span></p><p><span style="white-space: nowrap;">OOXX</span></p><p><span style="white-space: nowrap;"><br/></span></p><p><span style="white-space: nowrap;">We look forward to the support of clients old and new towards our services, and sincerely thank you for your support!</span></p><p><span style="white-space: nowrap;"><br/></span></p><p>    <span style="white-space: nowrap;">*************************************************************************************************************************************************************</span></p><p>    <span style="white-space: nowrap;">Jasgo Group Global Online Center</span></p><p><span style="white-space: nowrap;">(Liuzhou Jasgo Translation Co., Ltd. &amp; Liuzhou Xiezhi Information Technology Co., Ltd. &amp; Liuzhou Jasgo Human Resource Co., Ltd.)</span></p><p><span style="white-space: nowrap;"><br/></span></p><p><span style="white-space: nowrap;">Room 1306,13F, Ruitai Building, No.21,Longcheng Road, Chengzhong District,Liuzhou   City,Guangxi,545001,P.R.China</span></p><p><span style="white-space: nowrap;">Tel：0772-2804060、2804085、2230065、2236002</span></p><p><span style="white-space: nowrap;">E-mail: info@jasgo.com</span></p><p><span style="white-space: nowrap;">URL: http://www.jasgo.com</span></p><p><span style="white-space: nowrap;"><br/></span></p><p><span style="white-space: nowrap;">Tokyo・Osaka・Shanghai・Nanning・Liuzhou&nbsp;</span></p><p>    <span style="white-space: nowrap;">**************************************************************************************************************************************************************</span></p><p>    <span style="white-space: nowrap;"><br/></span></p><p>    <span style="white-space: nowrap;"><br/></span></p><p>    <span style="white-space: nowrap;"><br/></span></p><p>    <span style="white-space: nowrap;">尊敬的各位客户</span></p><p>    <span style="white-space: nowrap;"><br/></span></p><p>    <span style="white-space: nowrap;">OOXX</span></p><p>    <span style="white-space: nowrap;"><br/></span></p><p>    <span style="white-space: nowrap;">期待新老客户一如既往地支持本公司的业务，衷心感谢您的大力支持！</span></p><p>    <span style="white-space: nowrap;"><br/></span></p><p>    <span style="white-space: nowrap;">****************************************************************************</span></p><p>    <span style="white-space: nowrap;">携达集团全球网络中心</span></p><p>    <span style="white-space: nowrap;">（柳州携达翻译有限公司、柳州携智信息技术有限公司、柳州携达人力资源有限公司）</span></p><p>    <span style="white-space: nowrap;"><br/></span></p><p>    <span style="white-space: nowrap;">邮编 545001 中国广西柳州市城中区龙城路21号瑞泰大厦13楼1306室</span></p><p>    <span style="white-space: nowrap;">Tel: 0772-2804060、2804085、2230065、2236002&nbsp;</span></p><p>    <span style="white-space: nowrap;">E-mail: info@jasgo.com</span></p><p>    <span style="white-space: nowrap;">URL: http://www.jasgo.com&nbsp;</span></p><p>    <span style="white-space: nowrap;"><br/></span></p><p>    <span style="white-space: nowrap;">&nbsp;东京・大阪・上海・南宁・柳州</span></p><p>    <span style="white-space: nowrap;">****************************************************************************</span></p><p>    <br/></p>');
 						
 					}
 					else if($('#chgimg').attr('src')=='assets/imgs/bg_chkon.png')

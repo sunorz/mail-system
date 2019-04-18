@@ -25,9 +25,8 @@ li{
 	background:#FFF;
 	color: #000;
 	border-bottom-color:#fff;
-	cursor: pointer;
 }
-.curhover{
+.menu ul li:not(.curclick):hover{
     background:#FFF;
 	color: #000;
 	cursor:pointer;        
