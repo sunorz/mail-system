@@ -15,8 +15,10 @@
 		.line-input{border:#000000 solid 1px;border-width: 0 0 1px 0;outline: none;width: 100%;}
 		.line-select{border:#000000 solid 1px;border-width: 0 0 1px 0;outline: none;padding: 5px;cursor: pointer;}
 		#CML div{margin:1em 0 1em 0;}
+	.fa{cursor:pointer;}
 </style>
 <script src="assets/jquery.js"></script>
+<script src="assets/jquery.cookie.js"></script>
 <script src="assets/bootstrap.js"></script>
 <script src="./assets/tab.js"></script>
 </head>
@@ -61,7 +63,9 @@
 		<select class="form-control" id="selm"><?php echo select_items();?></select>
 		</div>
 	</div>
+
     <div id="CML" style="width: 80%;margin: 0 auto;max-width: 1000px;"></div>
+			
     </form></dir>
 	<div class="clearfix"></div>
 </div>
@@ -71,18 +75,17 @@
 <script>
 	$(function(){
 
-
+       
 		
 		$("#searchm").bind('input propertychange', function() {
-//				
-			$.post("inc/cslist.php",{mode:'searchm',skey:$("#searchm").val(),stype:null},function(result){$("#CML").html(result);});
+			$.post("inc/cslist.php",{mode:'searchm',skey:$("#searchm").val(),stype:null},function(result){$("#CML").html(result);$(".cp").val($(".tp").text());});
 //			
 			}); 
 		
 
 		$("#selm").bind('change',function(){
 			$("#searchm").val("");	
-			$.post("inc/cslist.php",{mode:'searchm',skey:null,stype:$("#selm").val()},function(result){$("#CML").html(result);});
+			$.post("inc/cslist.php",{mode:'searchm',skey:null,stype:$("#selm").val()},function(result){$("#CML").html(result);$(".cp").val($(".tp").text());});
 		});
 		$('input[type=radio][name=sendtype]').on("change",function() {
         if (this.value == 1) {
