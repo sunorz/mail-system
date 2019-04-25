@@ -8,6 +8,7 @@
 		#CML div{margin:1em 0 1em 0;}
 		</style>
 <?php
+//if(isset($_COOKIE)){var_dump($_COOKIE);}
 if(!isset($_SESSION))
 {
 session_start(); 
@@ -17,35 +18,35 @@ if(isset($_SESSION['uid'])&&isset($_POST['mode'])){
 	require('conn.php');
 	$curpage=1;
 	
-	if(isset($_COOKIE['p'])&&$_COOKIE['p']>0){
-		$curpage=$_COOKIE['p'];
-	}
-		if($_POST['stype']==null&&!strpos($_POST['skey'],"%")&&trim($_POST['skey'])!=""){
-			$query_a=" and csid>=(select csid from custinfo where (csname like '%".$_POST['skey']."%' or csmail like '%".$_POST['skey']."%') and csflag=0 limit ".(($curpage-1)*19).",1) limit 20";
+
+
+	if($_POST['stype']==null&&!strpos($_POST['skey'],"%")&&trim($_POST['skey'])!=""){
+
+			$query_a=" and csid>=(select csid from custinfo where (csname like '%".$_POST['skey']."%' or csmail like '%".$_POST['skey']."%') and csflag=0 limit ".(($curpage-1)*20).",1) limit 20";
 
 			//根据关键字
 			$query="select * from custinfo,category where cateid=cscate and csflag=0 and (csname like '%".$_POST['skey']."%' or csmail like '%".$_POST['skey']."%')";
 			if(($total=mysql_num_rows(mysql_query($query)))>0){
-				//echo '第'.$curpage.'页/共'.ceil($total/20).'页'; 
+				//echo '<span class="cp">'.$curpage.'</span>/<span class="tp">'.ceil($total/20).'</span>'; 
 				 echo '<br/><span class=\'text-success\'>共找到'.$total.'条数据。</span>';
 		$items='
 		<table class="table row-hover table-condensed table-responsive"><thead><tr><th>客户分类</th><th>企业名称</th><th>邮件地址</th><th>最后发送时间</th></tr></thead><tbody>';}
      	 mysql_query("set names utf8");
 			$q=mysql_query($query.$query_a);
-			//echo $query.$query_a;
+			//echo $query.$query_a);
 		while($row = mysql_fetch_array($q)){
 			$items.='<tr class="row-pop row-hold"><td>'.$row['catename'].'</td><td>'.$row['csname'].'</td><td>'.$row['csmail'].'</td><td>'.$row['csdate'].'</td><td class="row-hidden">'.$row['csid'].'</td></tr>';
 		}
-					 if(mysql_num_rows($q)>0){
+					 if(mysql_num_rows($query.$query_a)>0){
 			$items.='</tbody></table><div class="clearfix"></div>';
 					 }
 				
-
+	
 			
 		}
 	elseif($POST['skey']==null)
 	{
-		$query_b=" and csid>=(select csid from custinfo where cscate='".$_POST['stype']."' and csflag=0 limit ".(($curpage-1)*19).",1) limit 20";
+	$query_b=" and csid>=(select csid from custinfo where cscate='".$_POST['stype']."' and csflag=0 limit ".(($curpage-1)*20).",1) limit 20";
 		//根据分组
 					$query="select * from custinfo,category where cateid=cscate and csflag=0 and cateid='".$_POST['stype']."'";
 					if(($total=mysql_num_rows(mysql_query($query)))>0){
@@ -65,9 +66,17 @@ if(isset($_SESSION['uid'])&&isset($_POST['mode'])){
 					 }
 						
 				
-			}
+			}	
 
-			echo $items;
+	
+	
+	
+	
+		echo $items;
+	
+	
+
+		
 
 }
 

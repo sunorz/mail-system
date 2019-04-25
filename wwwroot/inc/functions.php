@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 		require('phpmailer/PHPMailerAutoload.php');
 		require_once('phpmailer/class.phpmailer.php');
 		require_once("phpmailer/class.smtp.php");
@@ -49,7 +49,9 @@ function sendMail($fr,$to,$ct,$at,$sub,$bccto){
 		$mail->Subject =  $sub; // 设置邮件标题
 		$mail->AltBody    = "为了查看该邮件，请切换到支持 HTML 的邮件客户端";                                         // 可选项，向下兼容考虑
 		$mail->Body=$cta;
-	
+		//$mail->MsgHTML('<html>人间四月天。</html>');                         // 设置邮件内容
+
+		
 		//$mail->AddAttachment("images/phpmailer.gif"); // 附件
 
 		if(!$mail->Send()) {
@@ -61,7 +63,7 @@ function sendMail($fr,$to,$ct,$at,$sub,$bccto){
 	//加密
 	 function encry($txt)
 	{
-		$key="ENTER_YOUR_KEY";
+		$key="CONFUSED_STRING";
     $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-=+";
     $nh = rand(0,64);
     $ch = $chars[$nh];
@@ -80,7 +82,7 @@ function sendMail($fr,$to,$ct,$at,$sub,$bccto){
 	//解密
 	 function decry($txt)
 	{ 
-	$key="ENTER_YOUR_KEY";
+	$key="CONFUSED_STRING";
     $txt = urldecode($txt);
     $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-=+";
     $ch = $txt[0];
@@ -102,20 +104,27 @@ function sendMail($fr,$to,$ct,$at,$sub,$bccto){
 
 		 function createTemp($mail,$content)
 		{
+ $str_jp="";
 
 
-
-			$str='<div id="jfooter">';
+			//$str='<div id="jfooter">';
 			if($mail!=0){				
 				$token=encry($mail);
-				$str.='<a class="ursub" href="http://mms.jasgo.com/inc/changemail.php?token='.$token.'">配信メールを変更してください</a>&nbsp;&nbsp;<a class="ursub" href="http://mms.jasgo.com/inc/unsubcribe.php?token='.$token.'">購読を中止</a>';
+				$str_jp.='<a class="ursub" href="http://hostname/inc/changemail.php?token='.$token.'">配信メールを変更する場合</a>&nbsp;&nbsp;<a class="ursub" href="http://hostname/inc/unsubcribe.php?token='.$token.'">購読を中止</a>';
+				$str_en.='<a class="ursub" href="http://hostname/inc/changemail.php?token='.$token.'">配信メールを変更する場合</a>&nbsp;&nbsp;<a class="ursub" href="http://hostname/inc/unsubcribe.php?token='.$token.'">購読を中止</a>';
+				$str_zh.='<p>    <span style="white-space: nowrap;color:#548dd4">如果您不愿意继续接收来自携达集团的自动订阅类邮件，请点击<a class="ursub" href="http://hostname/inc/unsubcribe.php?token='.$token.'">退订本类邮件</a>。</span></p><p>    <span style="white-space: nowrap;color:#548dd4">如果您想变更您所订阅的邮件列表，请点击<a class="ursub" href="http://hostname/inc/changemail.php?token='.$token.'">更新我的邮件订阅</a>进行设置。</span></p>';
 			}
 			else
 			{				
 				$token=encry(date('Y-m-d').'&'.'bcc');
-				$str.='<a class="ursub" href="http://mms.jasgo.com/inc/changemail.php?token='.$token.'">配信メールを変更してください</a>&nbsp;&nbsp;<a class="ursub" href="http://mms.jasgo.com/inc/unsubcribe.php?token='.$token.'">購読を中止</a>';
+				$str_jp.='<a class="ursub" href="http://hostname/inc/changemail.php?token='.$token.'">配信メールを変更する場合</a>&nbsp;&nbsp;<a class="ursub"  href="http://hostname/inc/unsubcribe.php?token='.$token.'">購読を中止</a>';
+				$str_en.='<a class="ursub" href="http://hostname/inc/changemail.php?token='.$token.'">配信メールを変更する場合</a>&nbsp;&nbsp;<a class="ursub"  href="http://hostname/inc/unsubcribe.php?token='.$token.'">購読を中止</a>';
+				$str_zh.='<p>    <span style="white-space: nowrap;color:#548dd4">如果您不愿意继续接收来自携达集团的自动订阅类邮件，请点击<a class="ursub"  href="http://hostname/inc/unsubcribe.php?token='.$token.'">退订本类邮件</a>。</span></p><p>    <span style="white-space: nowrap;color:#548dd4">如果您想变更您所订阅的邮件列表，请点击<a class="ursub" href="http://hostname/inc/changemail.php?token='.$token.'">更新我的邮件订阅</a>进行设置。</span></p>';
 			}
-			$str.='</div>';
+			//$str.='</div>';
+			 $content=str_replace("<p>[links_jp]</p>",$str_jp,$content);
+			 $content=str_replace("<p>[links_en]</p>",$str_en,$content);
+			 $content=str_replace("<p>[links_zh]</p>",$str_zh,$content);
 			return '<style>
 		body{margin:0;padding: 0;}
 		#jwrap{
@@ -127,13 +136,13 @@ function sendMail($fr,$to,$ct,$at,$sub,$bccto){
 		}
 		#jtitle{color: #95b7de;top:0;font-size:2em;font-weight: bolder;padding: 0.5em 0 0.5em 0.5em;}
 		#jcontent{background:#fff;padding: 2.5em;margin: 0 2em;word-break: break-all;overflow: hidden;color: #121212;}	
-		.ursub{color: #121212;font-size: 0.7em;text-decoration: none;}
+		.ursub{color: red;font-weight:bolder;text-decoration: none;}
 		.ursub:hover{text-decoration: underline;}
 		#jfooter{text-align: right;padding:20px;}
 	</style>
 	<div id="jwrap">
 	<div id="jtitle">Jasgo</div>
-	<div id="jcontent">'.$content.'</div>'.$str.'</div>';
+	<div id="jcontent">'.$content.'</div></div>';
 		}
 
 		//退订操作
