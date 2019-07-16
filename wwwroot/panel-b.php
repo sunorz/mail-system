@@ -34,7 +34,7 @@
 <div class="content">
     <dir>
     <form class="form-horizontal" method="post" action="panel.php" enctype="multipart/form-data">
-			<div class="form-group col-sm-12"><a href="tools-insert.php">录入</a>|<a href="tools-ls.php">导出</s>|<a href="/">退出</a></div>
+			<div class="form-group col-sm-12"><a href="tools-insert.php">录入</a>|<a href="tools-disabled.php">禁用</a>|<a href="tools-ls.php">导出</s>|<a href="/">退出</a></div>
 		<div class="form-group" id="s-field"><!--主题-->
 		<label for="subject" class="col-sm-2 control-label">邮件查询：</label>
 		<div class="col-sm-5" id="subject">

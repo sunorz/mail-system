@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -66,7 +66,7 @@ $uid=$_SESSION['uid'];
 		
 ?>
 <form class="form-horizontal" method="post" action="" enctype="multipart/form-data">
-	<div class="form-group col-sm-12"><a href="tools-insert.php">录入</a>|<a href="tools-ls.php">导出</s>|<a href="/">退出</a></div>
+	<div class="form-group col-sm-12"><a href="tools-insert.php">录入</a>|<a href="tools-disabled.php">禁用</a>|<a href="tools-ls.php">导出</s>|<a href="/">退出</a></div>
 	<div class="form-group"><!--发件人-->
 		<label for="from" class="col-sm-2 control-label">发件人：</label>
 		<div class="col-sm-10" id="sender">
@@ -240,7 +240,7 @@ scaleEnabled:false//设置不自动调整高度
 					{
 	
 						 $('#chgimg').attr('src', 'assets/imgs/bg_chkon.png'); 
-						$(".edui-body-container").html('日文：'+date.getFullYear() + '.' + appendzero(date.getMonth() + 1) + '.' + appendzero(date.getDate())+'英文：'+date.toDateString().split(" ")[1]+ ' ' + date.getDate()+ ',' + date.getFullYear()+'中文：'+date.getFullYear() + '.' + appendzero(date.getMonth() + 1) + '.' + appendzero(date.getDate()));
+$(".edui-body-container").html('日文：'+date.getFullYear() + '.' + appendzero(date.getMonth() + 1) + '.' + appendzero(date.getDate())+'英文：'+date.toDateString().split(" ")[1]+ ' ' + date.getDate()+ ',' + date.getFullYear()+'中文：'+date.getFullYear() + '.' + appendzero(date.getMonth() + 1) + '.' + appendzero(date.getDate()));
 						
 					}
 					else if($('#chgimg').attr('src')=='assets/imgs/bg_chkon.png')
