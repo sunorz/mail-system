@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -20,6 +20,7 @@
 <script  src="assets/editor/umeditor.min.js"></script>
 <script src="assets/editor/lang/zh-cn/zh-cn.js"></script>
 <script>
+		var date = new Date();  
         document.onkeydown = function (e) {
         var ev = window.event || e;
         var code = ev.keyCode || ev.which;
@@ -33,7 +34,12 @@
 	function upload(){
 		$.post("panel.php",{ulfiles:'searchm'},function(result){$("#postcontent").html(result);});
 	}
-	</script>
+		function appendzero(obj)
+    {
+        if(obj<10) return "0" +""+ obj;
+        else return obj;
+	}
+</script>
 </head>
 <body>
 <?php include('head.php');
@@ -60,6 +66,7 @@ $uid=$_SESSION['uid'];
 		
 ?>
 <form class="form-horizontal" method="post" action="" enctype="multipart/form-data">
+	<div class="form-group col-sm-12"><a href="tools-insert.php">录入</a>|<a href="tools-ls.php">导出</s>|<a href="/">退出</a></div>
 	<div class="form-group"><!--发件人-->
 		<label for="from" class="col-sm-2 control-label">发件人：</label>
 		<div class="col-sm-10" id="sender">
@@ -67,11 +74,9 @@ $uid=$_SESSION['uid'];
 		</div>
 	</div>
 	<div class="form-group"><!--收件人-->
-		<label for="to" class="col-sm-2 control-label">密送：</label>
+		<label id="toorbcc" for="to" class="col-sm-2 control-label">密送组：</label>
 		<div class="col-sm-5">
-		<select class="form-control" id="input_rec" name="recvtype">
-		<?php echo select_items();?>
-		</select>
+<input class="form-control" id="input_rec" name="recvtype" type="number" value="<?php echo select_items();?>" min="0" step="1"/>		
 		</div>
 		<div class="col-sm-5">
 		  <label>
@@ -86,22 +91,27 @@ $uid=$_SESSION['uid'];
 	<div class="form-group" id="rc"><!--收件人-->
 		<label for="recvier" class="col-sm-2 control-label">收件人：</label>
 		<div class="col-sm-9" id="recvier">
-		<input name="recvier" id="recv" type="mail" class="form-control" required="required" placeholder="请填写此字段" maxlength="30" autocomplete="off">
+		<input name="recvier" id="recv" type="mail" class="form-control" required="required" value="pr@jasgo.com" maxlength="30" autocomplete="off">
 		</div></div>
-		<div class="form-group" id="subj"><!--主题-->
+		<!--<div class="form-group" id="subj">
 		<label for="subject" class="col-sm-2 control-label">主题：</label>
 		<div class="col-sm-9" id="subject">
-		<input name="subject" id="sub" type="text" class="form-control" required="required" placeholder="请填写此字段" maxlength="30" autocomplete="off">
+		<input name="subject" id="sub" type="text" class="form-control" required="required" placeholder="请填写此字段" maxlength="140" autocomplete="off">
 		</div>
-	</div>
+	</div>-->
 	<div class="form-group"><!--内容-->
 	<label for="chgimg" class="col-sm-2 control-label"></label>
 	<div class="col-sm-10"><img src="assets/imgs/bg_chk.png" style="cursor: pointer;margin-right: 0.3em;" id="chgimg">采用模板</div>
 	</div>
+	<div class="form-group"><!--发送按钮-->
+	<div class="col-sm-2"></div>
+		<div class="col-sm-1"><input id="send_submit2" class="btn btn-primary form-control" type="button" value="发送" onClick="send()"></div>
+		<div class="col-sm-2" id="mails"></div>	
+		</div>
 	<div class="form-group"><!--内容-->
 	<label for="container" class="col-sm-2 control-label">内容：</label>
 	<div class="col-sm-10">
-		<textarea type="text/plain" id="container" style="height:240px;">
+		<textarea type="text/plain" id="container" style="height:240px;overflow-y: scroll;">
 		</textarea>
 	</div>
 	</div>
@@ -114,22 +124,28 @@ $uid=$_SESSION['uid'];
 </form>
 <?php 	
 		//收件人
+//		function select_items(){
+//		mysql_query("set names utf8");
+//		$q=mysql_query("select * from category");
+//		$items='';
+//		while($row = mysql_fetch_array($q)){
+//			if($row['cateid']==2333)
+//			{
+//				$items.='<option value ="'.$row['cateid'].'" selected="selected">'.$row['catename'].'</option>';
+//			}
+//			else
+//			{
+//				$items.='<option value ="'.$row['cateid'].'">'.$row['catename'].'</option>';
+//			}
+//			
+//		}
+//		return $items;
+//	}
 		function select_items(){
 		mysql_query("set names utf8");
-		$q=mysql_query("select * from category");
-		$items='';
-		while($row = mysql_fetch_array($q)){
-			if($row['cateid']==2333)
-			{
-				$items.='<option value ="'.$row['cateid'].'" selected="selected">'.$row['catename'].'</option>';
-			}
-			else
-			{
-				$items.='<option value ="'.$row['cateid'].'">'.$row['catename'].'</option>';
-			}
-			
-		}
-		return $items;
+		$q=mysql_query("select * from custinfo where csdate is null  and csflag=0 LIMIT 1");
+		$row = mysql_fetch_array($q);
+		return $row['cscate'];
 	}
 	
 		//客户邮箱列表
@@ -187,28 +203,25 @@ function upattachment(){
 		?>
     </dir>
  <script>
-var um = UM.getEditor('container');
+var um = UM.getEditor('container',{initialFrameHeight:250,//设置编辑器高度
+scaleEnabled:false//设置不自动调整高度
+								  });
 	function send(){
 		$("#send_submit").attr("disabled","disabled");
-		if($("#sub").val().trim()==""){
-	      $("#subj").attr("class","form-group has-error");
-
-		}
-		else
-		{
 		$("#subj").attr("class","form-group");
 		var concon = UM.getEditor('container').getContent();
 		$.post("inc/phpmailer.php",{
 			from:$("#sender").text(),
 			to:$("#input_rec").val(),
 			type:$("input[name='sendtype']:checked").val(),
-			subject:$("#sub").val(),
+			//subject:$("#sub").val(),
+			subject:"这是一封固定标题的信件-"+date.getFullYear() + '.' + appendzero(date.getMonth() + 1) + '.' + appendzero(date.getDate()),
 			cont:concon,
 			attrs:null,//这里是附件暂时留空
 			bccto:$("#recv").val()
 		},function(result){
 				  $("dir").html('<p><a href="panel.php">再写一封</a></p><div style="background:#121212;color:#fff;padding:1em;max-height:300px;overflow-y:scroll;">'+result+'</div>');});	
-		}
+
 		//alert(UM.getEditor('container').getContent());
 	}
 		
@@ -219,13 +232,15 @@ var um = UM.getEditor('container');
 </div>
 </div><!--end-->
 <script>
+
 	$(function(){
 	$('#chgimg').on({  
                     click:function(){ 
 					if($('#chgimg').attr('src')=='assets/imgs/bg_chk.png')
 					{
+	
 						 $('#chgimg').attr('src', 'assets/imgs/bg_chkon.png'); 
-						$(".edui-body-container").html('<p>[links_jp]</p><p>[links_en]</p><p>[links_zh]</p>');
+						$(".edui-body-container").html('日文：'+date.getFullYear() + '.' + appendzero(date.getMonth() + 1) + '.' + appendzero(date.getDate())+'英文：'+date.toDateString().split(" ")[1]+ ' ' + date.getDate()+ ',' + date.getFullYear()+'中文：'+date.getFullYear() + '.' + appendzero(date.getMonth() + 1) + '.' + appendzero(date.getDate()));
 						
 					}
 					else if($('#chgimg').attr('src')=='assets/imgs/bg_chkon.png')
@@ -234,19 +249,12 @@ var um = UM.getEditor('container');
 						$(".edui-body-container").html('');
 						
 					}  
-                   } 
+					}
 						 
                 }); 
 	
-	$("#cusmail").click(function(){
+	$("#cusmail").click(function(){		
 		
-		$("#searchm").bind('input propertychange', function() {
-//				
-			$.post("inc/cslist.php",{mode:'searchm',skey:$("#searchm").val(),stype:$("#selm").val()},function(result){$("#CML").html(result);});
-//			
-			}); 
-		
-	});
 		$("#selm").bind('change',function(){
 				
 			$.post("inc/cslist.php",{mode:'searchm',skey:$("#searchm").val(),stype:$("#selm").val()},function(result){$("#CML").html(result);});
@@ -255,14 +263,17 @@ var um = UM.getEditor('container');
         if (this.value == 1) {
 			$("#recv").removeAttr("disabled");
             $("#rc").slideDown();
+			$("#toorbcc").text('密送组：');
 		}
         else if(this.value == 0) {
 			$("#recv").attr("disabled","disabled");
             $("#rc").slideUp();
+			$("#toorbcc").text('收件组：');
         }
     });
 		
 });	
+	});
 
 </script>
 </body>

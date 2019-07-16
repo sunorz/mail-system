@@ -52,21 +52,6 @@ CREATE TABLE `custinfo` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `eee`
--- ----------------------------
-DROP TABLE IF EXISTS `eee`;
-CREATE TABLE `eee` (
-  `company` text,
-  `cname` text,
-  `mailname` varchar(50) NOT NULL,
-  `class` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`mailname`),
-  KEY `Mailname_Index` (`mailname`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of eee
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for `mailinfo`

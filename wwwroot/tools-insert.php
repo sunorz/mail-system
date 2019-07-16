@@ -36,23 +36,19 @@ a,a:link,a:active,a:visited{color:#000;text-decoration:none;}
 
 <body>
 <?php include("head.php");?> 
-<a href="#" id="eye">[睡眠模式]</a>&nbsp;&nbsp;<a href="tools-ls.php" target="_blank">[导出]</a>&nbsp;&nbsp;<a href="/">[返回首页]</a><br/><br/><br/>
-分组编号：<input type="number" step="1" value="<?php $res=mysql_query("select MAX(cscate) from custinfo where cscate<>2333");
+<a href="#" id="eye">睡眠模式</a>|<a href="tools-ls.php" target="_blank">导出</a>|<a href="tools-disabled.php" target="_blank">禁用</a>|<a href="/">退出</a><br/><br/><br/>
+<!--分组编号：--><input style="display: none;" type="number" step="1" value="<?php $res=mysql_query("select MAX(cscate) from custinfo where cscate<>2333");
 	$row=mysql_fetch_row($res);
 			echo $row[0];
-	?>" min="0" id="mlist" style="ime-mode:disabled;"><br/><br/>
+	?>" min="0" id="mlist" style="ime-mode:disabled;width: 500px;"><br/><br/>
 邮箱：<input type="email" id="memail" style="background-color: transparent !important;ime-mode:disabled;border-bottom: solid #000;border-width: 0 0 1px 0;outline: none;width: 90%;font-size: 2em;">
 <p><button id="dowork">开始</button></p>
 <div id="CML"></div>
 <script src="assets/jquery.js"></script>
 <script>
 	$(function(){
-		var arr=['人生得意须尽欢','古藤老树昏鸦','笑着活下去','做这种事情有多无聊','还是种田适合我','你饿没？','对酒当歌，人生几何','世界上最美的颜色是什么？','你有我有全都有哇~'];
 		$("#dowork").click(function(){
-	var i = Math.floor(Math.random()*9);
-	//$(this).text(arr[i]);	
-var mail = $('#memail').val();
-
+			var mail = $('#memail').val();
 if (mail != '') {//判断
     var reg = /^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)*@([A-Za-z0-9]+[-.])+[A-Za-zd]{2,6}$/; 
 	if (!reg.test(mail)) {

@@ -8,13 +8,13 @@ if(isset($_POST['keywds']))
 	if(strpos($email,'%')=='')
 	{	
 	$email = str_replace('_','\_',$email);
-    $qstr = "select * from eee where mailname like '%".$email."%'";	
+    $qstr = "select * from custinfo where csmail like '%".$email."%' limit 5";	
 	$query = mysql_query($qstr);
 	if(mysql_num_rows($query))
 	{
 	$str = '<div class="result"><div>你可能想输入：</div>';
 	while($row = mysql_fetch_array($query)){		
-			$str.='<div>'.$row['mailname'].'   <i style="color:orange;padding-right:1em;">'.$row['class'].'</i></div>';
+			$str.='<div>'.$row['csmail'].'   <i style="color:orange;padding-right:1em;">'.$row['cscate'].'</i></div>';
 		}		
 	}
 	$str.='</div>';

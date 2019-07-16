@@ -3,6 +3,7 @@ if(!isset($_SESSION))
 {
 session_start(); 
 }
+
 $con = mysql_connect("localhost","root","123456");//连接数据库服务器
 if (!$con)
   {

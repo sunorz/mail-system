@@ -2,7 +2,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Email</title>
+<title>Jasgo-Unsubcribe</title>
 </head>
 <link rel="stylesheet" href="../assets/panel.css">
 <link rel="stylesheet" href="../assets/bootstrap.css">
@@ -10,10 +10,13 @@
 <style>
 	.form-inline{max-width: 800px;width: 90%;margin: 90px auto;text-align: center;}
 	.cls{background: #484848;color: #fff;font-size: 12px;width: 90%;margin: 20px auto;padding: 1em;}
+	body{margin: 20px;}
+	h2{background:#365DB8;color: #fff;padding: 0.5em;}
 </style>
 <script src="../assets/jquery.js"></script>
 <script src="../assets/bootstrap.js"></script>
 <body>
+	<h2>Jasgo E-mail System - UNSUBRIBE</h2>
 <?php
 	
 if(isset($_GET['token']))
@@ -26,11 +29,11 @@ if(isset($_GET['token']))
 		while($rows=mysql_fetch_array($ress)){
 			
 			if($rows['csflag']==1){
-				echo '<div class="cls">(error:0x72000)此邮件已经退订！</div>';
+				echo '<div class="cls"><br/>This email address has been unsubscribed!<br/>该邮件地址已经被退订！</div>';
 			}
 			else{
 				unsub($demail);
-				echo '<div class="cls">退订成功。</div>';
+				echo '<div class="cls"><br/>Unsubscribe successfully.<br/>退订成功。</div>';
 			}
 		}		
 	}
@@ -41,15 +44,15 @@ if(isset($_GET['token']))
 		if($array[1]=="bcc"){
 			echo '<div class="form-inline">
   <div class="form-group">
-    <label for="exampleInputEmail2">Email</label>
+    <label for="exampleInputEmail2">Enter Your email address</label>
     <input type="email" class="form-control" placeholder="jane.doe@example.com" autocomplete="false" maxlength="50">
 	<input id="vy" type="hidden" value="'.md5($array[0]).'">
   </div>
-  <button type="button" class="btn btn-danger">退订</button>
+  <button type="button" class="btn btn-danger">UNSUBCRIBE</button>
 </div><div id="res"></div>';
 		}
 	}
-	else{echo '<div class="cls">(error:0x71000)无法退订，不正确的退订连接！</div>';}
+	else{echo '<div class="cls">无法退订，不正确的退订连接！</div>';}
 }
 else{
 	header('Location:/');

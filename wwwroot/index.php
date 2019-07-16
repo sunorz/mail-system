@@ -17,7 +17,7 @@
 <form autocomplete="off" class="form-horizontal" action="/" method="post">
   <p class="form-group">
     <label for="textfield" >用户名:</label>
-    <input class="form-control" type="text" name="un" id="textfield" maxlength="20">
+    <input class="form-control" type="text" name="un" id="textfield" maxlength="20" value="">
   </p>
   <p class="form-group">
     <label for="password">密码:</label>
@@ -38,6 +38,13 @@
         //登录成功
 		$_SESSION['un']=$result['un'];
 		$_SESSION['uid']=$result['uid'];
+
+if(isset($_SESSION)&&$_SESSION['uid']==1){
+	header("Location:tools-insert.php");
+	exit;
+}
+
+
          echo "<script>location.href='panel.php';</script>"; 
          exit;
           } 
@@ -46,7 +53,6 @@
 	      exit;}
 	}
 	?>
-		<a href="tools-insert.php">[开始录入]</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="tools-ls.php">[导出内容]</a>
 </div>
 <script>$(function(){
 		$("#reg").click(function(event){

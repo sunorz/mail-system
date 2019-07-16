@@ -20,6 +20,7 @@ function sendMail($fr,$to,$ct,$at,$sub,$bccto){
 				$mail->addBCC($row_getCust['csmail']);
 				mysql_query("update custinfo set csdate='".date('Y-m-d')."' where csmail='".$row_getCust['csmail']."'");
 			}
+			$mail->addCC('info@jasgo.com');
 			$cta=createTemp(0,$ct);//套入模板
 			$mail->addAddress(trim($bccto));//设置指定的收件人
 		}
@@ -101,48 +102,37 @@ function sendMail($fr,$to,$ct,$at,$sub,$bccto){
     return base64_decode($tmp);
 	}	
 	//初始化模板
-
+		$token="";
 		 function createTemp($mail,$content)
 		{
- $str_jp="";
-
-
+			 $str_jp=$str_en=$str_zh="";
 			//$str='<div id="jfooter">';
 			if($mail!=0){				
-				$token=encry($mail);
-				$str_jp.='<a class="ursub" href="http://hostname/inc/changemail.php?token='.$token.'">配信メールを変更する場合</a>&nbsp;&nbsp;<a class="ursub" href="http://hostname/inc/unsubcribe.php?token='.$token.'">購読を中止</a>';
-				$str_en.='<a class="ursub" href="http://hostname/inc/changemail.php?token='.$token.'">配信メールを変更する場合</a>&nbsp;&nbsp;<a class="ursub" href="http://hostname/inc/unsubcribe.php?token='.$token.'">購読を中止</a>';
-				$str_zh.='<p>    <span style="white-space: nowrap;color:#548dd4">如果您不愿意继续接收来自携达集团的自动订阅类邮件，请点击<a class="ursub" href="http://hostname/inc/unsubcribe.php?token='.$token.'">退订本类邮件</a>。</span></p><p>    <span style="white-space: nowrap;color:#548dd4">如果您想变更您所订阅的邮件列表，请点击<a class="ursub" href="http://hostname/inc/changemail.php?token='.$token.'">更新我的邮件订阅</a>进行设置。</span></p>';
+				$token=encry($mail);				
 			}
 			else
 			{				
-				$token=encry(date('Y-m-d').'&'.'bcc');
-				$str_jp.='<a class="ursub" href="http://hostname/inc/changemail.php?token='.$token.'">配信メールを変更する場合</a>&nbsp;&nbsp;<a class="ursub"  href="http://hostname/inc/unsubcribe.php?token='.$token.'">購読を中止</a>';
-				$str_en.='<a class="ursub" href="http://hostname/inc/changemail.php?token='.$token.'">配信メールを変更する場合</a>&nbsp;&nbsp;<a class="ursub"  href="http://hostname/inc/unsubcribe.php?token='.$token.'">購読を中止</a>';
-				$str_zh.='<p>    <span style="white-space: nowrap;color:#548dd4">如果您不愿意继续接收来自携达集团的自动订阅类邮件，请点击<a class="ursub"  href="http://hostname/inc/unsubcribe.php?token='.$token.'">退订本类邮件</a>。</span></p><p>    <span style="white-space: nowrap;color:#548dd4">如果您想变更您所订阅的邮件列表，请点击<a class="ursub" href="http://hostname/inc/changemail.php?token='.$token.'">更新我的邮件订阅</a>进行设置。</span></p>';
+				$token=encry(date('Y-m-d').'&'.'bcc');				
 			}
+			 	$str_jp='<p style="font-family:MS UI Gothic;">※今後、当ニュースレターの配信を希望されない場合は、<a class="ursub"  href="http://mms.jasgo.com/inc/unsubcribe.php?token='.$token.'">「配信停止」</a>をクリックし、配信を停止するメールアドレスをご入力ください。<br>メールアドレスの変更を希望される場合は、<a class="ursub" href="http://mms.jasgo.com/inc/changemail.php?token='.$token.'">「メールアドレス変更」</a>をクリックし、旧アドレスと新アドレスをご入力ください。</p>';
+				$str_en='<p style="font-family:arial;">※If you don\'t want to receive emails from us anymore, please click <a class="ursub"  href="http://mms.jasgo.com/inc/unsubcribe.php?token='.$token.'">[UNSUBCRIBE]</a>, and enter your old email address.<br>If your email address has been changed, please cilck <a class="ursub" href="http://mms.jasgo.com/inc/changemail.php?token='.$token.'">[Email Address Change]</a>, and enter both your new and old email address.</p>';
+				$str_zh='<p style="font-family:宋体, SimSun">※如果今后您不希望接收本邮件，请点击<a class="ursub"  href="http://mms.jasgo.com/inc/unsubcribe.php?token='.$token.'">【停止发送】</a>，并填入旧电子邮件地址。<br>如果您电子邮件地址变更，请点击<a class="ursub" href="http://mms.jasgo.com/inc/changemail.php?token='.$token.'">【邮件地址变更】</a>，并填入旧电子邮件地址和新电子邮件地址 。</p>';
 			//$str.='</div>';
-			 $content=str_replace("<p>[links_jp]</p>",$str_jp,$content);
-			 $content=str_replace("<p>[links_en]</p>",$str_en,$content);
-			 $content=str_replace("<p>[links_zh]</p>",$str_zh,$content);
+			 $content=str_replace("[links_jp]",$str_jp,$content);
+			 $content=str_replace("[links_en]",$str_en,$content);
+			 $content=str_replace("[links_zh]",$str_zh,$content);
 			return '<style>
-		body{margin:0;padding: 0;}
+		body{margin:0;padding: 0;line-height:1;font-size:17px; }
 		#jwrap{
 			margin: 0;
 			padding: 0;
-			margin: 0 auto;
-			background: #f8f9fa;
-			border-radius: 5px;		
 		}
-		#jtitle{color: #95b7de;top:0;font-size:2em;font-weight: bolder;padding: 0.5em 0 0.5em 0.5em;}
-		#jcontent{background:#fff;padding: 2.5em;margin: 0 2em;word-break: break-all;overflow: hidden;color: #121212;}	
+		#jcontent{background:#fff;}	
 		.ursub{color: red;font-weight:bolder;text-decoration: none;}
 		.ursub:hover{text-decoration: underline;}
-		#jfooter{text-align: right;padding:20px;}
-	</style>
-	<div id="jwrap">
-	<div id="jtitle">Jasgo</div>
-	<div id="jcontent">'.$content.'</div></div>';
+	</style><div id="jcontent"><span style="font-family:MS UI Gothic">※この電子版ニュースレターは、日本語、英語、中国語の3言語で配信しており、日本語版、英語版、中国語版の順に掲載しています。</span><br>
+<span style="font-family:arial">※This newsletter is released in three languages:Japanese, English, and Chinese. The editions appear in the following order: Japanese, English, and Chinese.</span><br>
+<span style="font-family:宋体, SimSun">※本电子邮件新闻信以日文，英文和中文三个语言版本发行。语言版本顺序：日文，英文和中文。</span><br>'.$content.'</div>';
 		}
 
 		//退订操作
