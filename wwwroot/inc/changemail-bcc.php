@@ -28,6 +28,11 @@ if(isset($_POST['before'])&&isset($_POST['after'])&&isset($_POST['verify'])){
 		$res=mysql_query("select csdate from custinfo where csmail='".$_POST['before']."' limit 1");
 		while($rows=mysql_fetch_array($res)){
 			if(md5($rows['csdate'])==$_POST['verify']){
+				if(fmail($_POST['after']))
+				{
+					echo '<div class="cls">需要更改的邮箱地址已经存在，如需退订，请到邮件内容中点击退订链接。</div>';
+					exit;
+				}
 				mysql_query("update custinfo set csmail='".$_POST['after']."',csflag=0 where csmail='".$_POST['before']."'");
 				echo '<div class="cls">更新完成！</div>';
 			}			
