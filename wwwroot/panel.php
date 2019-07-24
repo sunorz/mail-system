@@ -144,6 +144,7 @@ $uid=$_SESSION['uid'];
 		function select_items(){
 		mysql_query("set names utf8");
 		$q=mysql_query("select * from custinfo where csdate is null  and csflag=0 LIMIT 1");
+		//select cscate from custinfo where csdate=(select min(csdate) from custinfo limit 1) limit 1
 		$row = mysql_fetch_array($q);
 		return $row['cscate'];
 	}
