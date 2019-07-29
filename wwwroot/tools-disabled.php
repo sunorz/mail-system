@@ -70,8 +70,16 @@ if (mail != '') {//判断
 		}
 }
 		});
-	
+
 });
+				$("#eye").click(function(){
+			$("body").toggleClass("b1");
+			$("a").toggleClass("b1");
+			$("input").toggleClass("b1");
+			$("button").toggleClass("b1");
+			$("#curp").toggleClass("b2");
+	
+			});
 </script>
 </body>
 </html>
