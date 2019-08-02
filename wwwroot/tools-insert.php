@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>录入邮箱地址</title>
+<title>录入邮箱地址-流水线</title>
 	<style>#dowork{
 		width: 100%;
 		height: 100px;
@@ -42,7 +42,7 @@ a,a:link,a:active,a:visited{color:#000;text-decoration:none;}
 	<?php
 		
 }?> 
-<a href="#" id="eye">睡眠模式</a>|<a href="tools-disabled.php" target="_blank">禁用</a>|<a href="tools-ls.php" target="_blank">导出</a>|<a href="tools-disabled.php" target="_blank">禁用</a>|<a href="/">退出</a><br/><br/><br/>
+<a href="#" id="eye">睡眠模式</a>|<a href="tools-ls.php" target="_blank">导出</a>|<a href="tools-disabled.php" target="_blank">禁用</a>|<a href="/">退出</a><br/><br/><br/>
 <!--分组编号：--><input style="display: none;" type="number" step="1" value="<?php $res=mysql_query("select MAX(cscate) from custinfo where cscate<>2333");
 	$row=mysql_fetch_row($res);
 			echo $row[0];

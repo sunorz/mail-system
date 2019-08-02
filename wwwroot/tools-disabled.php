@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>禁用邮箱地址</title>
+<title>禁用邮箱地址-流水线</title>
 	<style>#dowork{
 		width: 100%;
 		height: 100px;
@@ -32,6 +32,7 @@
 		.b2{background: #767676 !important;color: #1f1f1f !important;}
 		#curp{background: #1f1f1f;color: #fff;}
 a,a:link,a:active,a:visited{color:#000;text-decoration:none;}
+		#c_disable{color: red;}
 	</style>
 </head>
 
@@ -55,6 +56,7 @@ a,a:link,a:active,a:visited{color:#000;text-decoration:none;}
 <script src="assets/jquery.js"></script>
 <script>
 $(function(){
+
 		$("#dowork").click(function(){
 			var mail = $('#memail').val();
 if (mail != '') {//判断
@@ -80,6 +82,9 @@ if (mail != '') {//判断
 			$("#curp").toggleClass("b2");
 	
 			});
+		$("#CML").on("click","#c_disable",function(){
+		$.post("tools-disabled-inc.php",{flag:'disable',email:$("#c_mail").text()},function(result){$("#CML").html(result);});
+	});
 </script>
 </body>
 </html>
