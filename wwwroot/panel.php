@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -66,7 +66,8 @@ $uid=$_SESSION['uid'];
 		
 ?>
 <form class="form-horizontal" method="post" action="" enctype="multipart/form-data">
-	<div class="form-group col-sm-12"><a href="tools-insert.php">录入</a>|<a href="tools-disabled.php">禁用</a>|<a href="tools-ls.php">导出</s>|<a href="/">退出</a></div>
+	<div class="form-group col-sm-12"><a href="tools-insert.php">录入</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="tools-disabled.php">禁用</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="tools-ls.php">导出</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/">退出</a></div>
+	<div class="form-group col-sm-12 text-danger"><?php tips();?></div>
 	<div class="form-group"><!--发件人-->
 		<label for="from" class="col-sm-2 control-label">发件人：</label>
 		<div class="col-sm-10" id="sender">
@@ -105,7 +106,7 @@ $uid=$_SESSION['uid'];
 	</div>
 	<div class="form-group"><!--发送按钮-->
 	<div class="col-sm-2"></div>
-		<div class="col-sm-1"><input id="send_submit2" class="btn btn-primary form-control" type="button" value="发送" onClick="send()"></div>
+		<div><input id="send_submit2" class="btn btn-primary" type="button" value="发送" onClick="send()"></div>
 		<div class="col-sm-2" id="mails"></div>	
 		</div>
 	<div class="form-group"><!--内容-->
@@ -117,7 +118,7 @@ $uid=$_SESSION['uid'];
 	</div>
 	<div class="form-group"><!--发送按钮-->
 	<div class="col-sm-2"></div>
-		<div class="col-sm-1"><input id="send_submit" class="btn btn-primary form-control" type="button" value="发送" onClick="send()"></div>
+		<div><input id="send_submit" class="btn btn-primary" type="button" value="发送" onClick="send()"></div>
 		<div class="col-sm-2" id="mails"></div>	
 		</div>
 	
@@ -141,12 +142,19 @@ $uid=$_SESSION['uid'];
 //		}
 //		return $items;
 //	}
-		function select_items(){
+	function select_items(){
 		mysql_query("set names utf8");
 		$q=mysql_query("select * from custinfo where csdate is null  and csflag=0 LIMIT 1");
 		//select cscate from custinfo where csdate=(select min(csdate) from custinfo limit 1) limit 1
 		$row = mysql_fetch_array($q);
 		return $row['cscate'];
+	}
+	function tips(){
+		$cate = select_items();
+		$q=mysql_query("select * from custinfo where csdate='".date('Y-m-d')."' and cscate='".$cate."' LIMIT 1");
+		if(mysql_num_rows($q)>=1)
+		echo '数据库内部邮件格式有误！';
+		
 	}
 	
 		//客户邮箱列表
@@ -235,6 +243,10 @@ scaleEnabled:false//设置不自动调整高度
 <script>
 
 	$(function(){
+	if($(".text-danger").text().length>10){
+		$(".btn").hide();
+		$(".edui-container").parent(".col-sm-10").html('<i>请核查数据库错误之后，再刷新该页面。</i>');
+	}
 	$('#chgimg').on({  
                     click:function(){ 
 					if($('#chgimg').attr('src')=='assets/imgs/bg_chk.png')
