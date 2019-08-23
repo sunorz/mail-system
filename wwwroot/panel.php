@@ -67,7 +67,7 @@ $uid=$_SESSION['uid'];
 ?>
 <form class="form-horizontal" method="post" action="" enctype="multipart/form-data">
 	<div class="form-group col-sm-12"><a href="tools-insert.php">录入</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="tools-disabled.php">禁用</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="tools-ls.php">导出</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/">退出</a></div>
-	<div class="form-group col-sm-12 text-danger"><?php tips();?></div>
+	
 	<div class="form-group"><!--发件人-->
 		<label for="from" class="col-sm-2 control-label">发件人：</label>
 		<div class="col-sm-10" id="sender">
@@ -123,6 +123,7 @@ $uid=$_SESSION['uid'];
 		</div>
 	
 </form>
+		<div class="col-sm-12 text-danger"><?php tips();?></div>
 <?php 	
 		//收件人
 //		function select_items(){
@@ -153,7 +154,13 @@ $uid=$_SESSION['uid'];
 		$cate = select_items();
 		$q=mysql_query("select * from custinfo where csdate='".date('Y-m-d')."' and cscate='".$cate."' LIMIT 1");
 		if(mysql_num_rows($q)>=1)
-		echo '数据库内部邮件格式有误！';
+		{
+			echo '<table class="table table-bordered" style="table-layout:fixed;margin-top:1em;"><tbody>';
+			while($rows=mysql_fetch_array($q)){
+				echo '<tr><td>'.$rows['csmail'].'</td></tr>';
+			}
+			echo '</tbody></table>';
+		}
 		
 	}
 	
@@ -245,7 +252,7 @@ scaleEnabled:false//设置不自动调整高度
 	$(function(){
 	if($(".text-danger").text().length>10){
 		$(".btn").hide();
-		$(".edui-container").parent(".col-sm-10").html('<i>请核查数据库错误之后，再刷新该页面。</i>');
+		$("form").html('<i>分组'+$("#input_rec").val()+'内数据遗漏。请核查数据库错误之后，再刷新该页面。</i>');
 	}
 	$('#chgimg').on({  
                     click:function(){ 
