@@ -152,9 +152,9 @@ $uid=$_SESSION['uid'];
 	}
 	function tips(){
 		$cate=select_items();
-		$q2=mysql_query("select * from custinfo where csflag=0 and cscate='".$cate."' and csdate is null");
+		$q2=mysql_query("select * from custinfo where csflag=0 and cscate='".$cate."' and csdate='".date('Y-m-d')."' limit 1");
 		//select * from custinfo where csflag=0 and cscate='".$cate."' and (csdate<'2019-08-02')
-		if(mysql_num_rows($q2)>=1)
+		if(mysql_num_rows($q2)==1)
 		{
 			echo '<table class="table table-bordered" style="table-layout:fixed;margin-top:1em;"><tbody>';
 			while($rows=mysql_fetch_array($q2)){
