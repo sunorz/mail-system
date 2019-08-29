@@ -151,12 +151,13 @@ $uid=$_SESSION['uid'];
 		return $row['cscate'];
 	}
 	function tips(){
-		$cate = select_items();
-		$q=mysql_query("select * from custinfo where csdate='".date('Y-m-d')."' and cscate='".$cate."' LIMIT 1");
-		if(mysql_num_rows($q)>=1)
+		$cate=select_items();
+		$q2=mysql_query("select * from custinfo where csflag=0 and cscate='".$cate."' and csdate is null");
+		//select * from custinfo where csflag=0 and cscate='".$cate."' and (csdate<'2019-08-02')
+		if(mysql_num_rows($q2)>=1)
 		{
 			echo '<table class="table table-bordered" style="table-layout:fixed;margin-top:1em;"><tbody>';
-			while($rows=mysql_fetch_array($q)){
+			while($rows=mysql_fetch_array($q2)){
 				echo '<tr><td>'.$rows['csmail'].'</td></tr>';
 			}
 			echo '</tbody></table>';
