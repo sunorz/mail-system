@@ -1,21 +1,54 @@
-MIT License
+Sunplace Non-Commercial Attribution License (SNCAL) v1.0
 
-Copyright (c) 2023 Sunplace
+Copyright (c) 2023 Sunplace. All rights reserved except as granted below.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+1. GRANT OF PERMISSION
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to use, copy, modify, merge, publish, and distribute the Software, and to create derivative works based on it, subject to the conditions below.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+2. CONDITIONS
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+2.1 Attribution. All copies, substantial portions, and derivative works of the Software (including derived apps, websites, and services) must retain the original copyright notice "Copyright (c) 2023 Sunplace", this license text, and a clearly visible credit to the original author "Sunplace" (for example, in the README, an About page, or a page footer). You may not remove, alter, or obscure these notices.
+
+2.2 Ownership. The original copyright and ownership of the Software remain with Sunplace at all times. You may not claim authorship or ownership of the original Software. You may hold copyright only in your own original modifications, and only for those modifications.
+
+2.3 Non-Commercial Use Only. You may not use the Software or any derivative work for commercial purposes. "Commercial purposes" include, without limitation: selling, licensing, or sublicensing the Software or derivatives; offering them as a paid product or service; using them in a product, website, or service that generates revenue (including through advertising, subscriptions, or paid access); and using them in the course of business activities for profit. Personal use, learning, research, and non-profit hobby projects are permitted.
+
+2.4 Same Terms. Any distribution of the Software or derivative works must be made under this same license.
+
+3. TERMINATION
+Any violation of these conditions automatically terminates your rights under this license. You may regain them only if Sunplace expressly reinstates them in writing.
+
+4. COMMERCIAL LICENSING
+If you wish to use the Software commercially, you must obtain separate written permission from Sunplace.
+
+5. NO WARRANTY
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+---------------------------------------------------------------------
+中文参考译文（如有歧义，以英文原文为准）
+
+Sunplace 非商业署名许可证（SNCAL）v1.0
+
+版权所有 (c) 2023 Sunplace。除下列授权外，保留所有权利。
+
+一、授权
+任何人获得本软件及相关文档文件（"软件"）的副本后，可免费使用、复制、修改、合并、发布、分发本软件，并基于本软件创作衍生作品，但须满足以下条件。
+
+二、条件
+
+1. 署名：所有副本、重要部分及衍生作品（包括衍生的应用、网站和服务）必须保留原始版权声明"Copyright (c) 2023 Sunplace"、本许可证全文，并以清晰可见的方式标注原作者"Sunplace"（例如在 README、关于页面或页脚中）。不得删除、修改或隐藏这些声明。
+
+2. 所有权：软件的原始版权和所有权始终归 Sunplace 所有。不得声称自己是原始软件的作者或所有者。你仅对自己原创的修改部分享有权利。
+
+3. 仅限非商业用途：不得将本软件或其衍生作品用于商业目的，包括但不限于：出售、许可或再许可；作为付费产品或服务提供；用于产生收入的产品、网站或服务（包括通过广告、订阅或付费访问获利）；用于以营利为目的的商业活动。个人使用、学习、研究及非营利的兴趣项目允许。
+
+4. 相同条款：分发本软件或其衍生作品时，必须沿用本许可证。
+
+三、终止
+任何违反上述条件的行为将自动终止你在本许可证下的权利，除非 Sunplace 书面明确恢复。
+
+四、商业授权
+如需商业使用，必须另行取得 Sunplace 的书面许可。
+
+五、免责声明
+本软件按"原样"提供，不附带任何明示或暗示的保证。在任何情况下，作者均不对因本软件或其使用而产生的任何索赔、损害或其他责任负责。
